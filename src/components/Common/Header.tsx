@@ -87,7 +87,7 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <div key={item.slug} className="relative group px-1">
                   {item.children ? (
-                    <div className="flex items-center cursor-pointer group py-2">
+                    <div className=" items-center cursor-pointer group py-2 hidden"> {/* flex */}
                       <button className="flex items-center px-3 py-2 rounded-md group-hover:bg-emerald-50 transition-colors duration-200">
                         <span className="text-gray-700 group-hover:text-emerald-700 transition-colors duration-200 font-medium">
                           {item.title}
