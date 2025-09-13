@@ -5,7 +5,9 @@ import React from 'react';
 const Tour = () => {
     return (
         <div>
+            
             <TouristPlaces />
+
         </div>
     );
 };
