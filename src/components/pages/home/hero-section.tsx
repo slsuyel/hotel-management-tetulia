@@ -6,16 +6,25 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
 import { CalendarIcon, MapPinIcon, UsersIcon, BedIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export function HeroSection() {
   const [checkIn, setCheckIn] = useState("")
   const [checkOut, setCheckOut] = useState("")
   const [roomType, setRoomType] = useState("")
   const [numberOfRooms, setNumberOfRooms] = useState("")
-
+  const router = useRouter();
   const handleSearch = () => {
-    console.log("Searching with:", { checkIn, checkOut, roomType, numberOfRooms })
-    // Handle search logic here
+ 
+    const queryParams = new URLSearchParams({
+      checkIn: checkIn.toString(),
+      checkOut: checkOut.toString(),
+      roomType: roomType.toString(),
+      numberOfRooms: numberOfRooms.toString()
+    }).toString();
+  
+    // Redirect to the URL with the query string
+    router.push(`/search?${queryParams}`);
   }
 
   return (
