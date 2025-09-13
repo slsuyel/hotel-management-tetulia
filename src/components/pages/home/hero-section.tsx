@@ -1,171 +1,163 @@
 "use client"
 
-import type React from "react"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card } from "@/components/ui/card"
+import { CalendarIcon, MapPinIcon, UsersIcon, BedIcon } from "lucide-react"
 
-import { useState, useEffect, useCallback } from "react"
-import Image from "next/image"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+export function HeroSection() {
+  const [checkIn, setCheckIn] = useState("")
+  const [checkOut, setCheckOut] = useState("")
+  const [roomType, setRoomType] = useState("")
+  const [numberOfRooms, setNumberOfRooms] = useState("")
 
-type SlideType = {
-  id: number
-  image: string
-  title: string
-  subtitle: string
-}
-
-export default function HeroSection() {
-  const slides: SlideType[] = [
-    {
-      id: 1,
-      image: "https://cdn.jugantor.com/assets/news_photos/2023/09/15/image-718224-1694738414.jpg",
-      title: "পঞ্চগড়ে আপনাকে স্বাগতম",
-      subtitle: "মির্জাপুর শাহী মসজিদ",
-    },
-    {
-      id: 2,
-      image: "https://ecdn.dhakatribune.net/contents/cache/images/900x505x1/uploads/dten/2023/04/30/tea-garden-dt.jpeg",
-      title: "প্রাকৃতিক সৌন্দর্যের লীলাভূমি",
-      subtitle: "পঞ্চগড় চা বাগান",
-    },
-    {
-      id: 3,
-      image: "https://www.motorcyclevalley.com/images/places/Banglabandha-Zero-Point-1654670211.jpg",
-      title: "সীমান্তের শোভা",
-      subtitle: "বাংলাবান্ধা জিরো পয়েন্ট",
-    },
-    {
-      id: 4,
-      image: "https://i0.wp.com/adarbepari.com/wp-content/uploads/2016/05/tetulia-Kangchenjunga-03.jpg?fit=830%2C435&ssl=1",
-      title: "হিমালয়ের দৃশ্য",
-      subtitle: "তেঁতুলিয়া থেকে কাঞ্চনজঙ্ঘা",
-    },
-  ]
-
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [touchStart, setTouchStart] = useState<number | null>(null)
-  const [touchEnd, setTouchEnd] = useState<number | null>(null)
-
-  // Auto slide functionality
-  useEffect(() => {
-    const slideInterval = setInterval(() => {
-      nextSlide()
-    }, 5000)
-
-    return () => clearInterval(slideInterval)
-  }, [currentIndex])
-
-  const prevSlide = useCallback(() => {
-    if (isTransitioning) return
-    setIsTransitioning(true)
-    const isFirstSlide = currentIndex === 0
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1
-    setCurrentIndex(newIndex)
-    setTimeout(() => setIsTransitioning(false), 500)
-  }, [currentIndex, isTransitioning, slides.length])
-
-  const nextSlide = useCallback(() => {
-    if (isTransitioning) return
-    setIsTransitioning(true)
-    const isLastSlide = currentIndex === slides.length - 1
-    const newIndex = isLastSlide ? 0 : currentIndex + 1
-    setCurrentIndex(newIndex)
-    setTimeout(() => setIsTransitioning(false), 500)
-  }, [currentIndex, isTransitioning, slides.length])
-
-  const goToSlide = (slideIndex: number) => {
-    if (isTransitioning || slideIndex === currentIndex) return
-    setIsTransitioning(true)
-    setCurrentIndex(slideIndex)
-    setTimeout(() => setIsTransitioning(false), 500)
-  }
-
-  // Touch handlers for mobile swipe
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe) {
-      nextSlide()
-    } else if (isRightSwipe) {
-      prevSlide()
-    }
+  const handleSearch = () => {
+    console.log("Searching with:", { checkIn, checkOut, roomType, numberOfRooms })
+    // Handle search logic here
   }
 
   return (
-    <div className="relative h-[70vh] md:h-[80vh] w-full overflow-hidden group">
-      <div
-        className="w-full h-full flex transition-transform duration-500 ease-out"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-      >
-        {slides.map((slide) => (
-          <div key={slide.id} className="w-full h-full flex-shrink-0 relative">
-            <Image
-              src={slide.image || "/placeholder.svg"}
-              alt={slide.subtitle}
-              fill
-              priority
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://www.tbsnews.net/sites/default/files/styles/very_big_1/public/images/2021/02/24/panchagarh_is_the_only_place_where_you_can_see_the_himalaya_from_bangladesh._photo_firoz_al_sabah.jpg"
+          alt="Scenic agricultural landscape"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
 
-            {/* Text overlay with decorative border */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
-              <div className="max-w-4xl w-full text-center relative">
-                <div className="absolute inset-0 border-2 border-white/20 rounded-lg -m-6 blur-sm"></div>
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">{slide.title}</h1>
-                <div className="w-24 h-1 bg-white/70 mx-auto mb-4"></div>
-                <h2 className="text-xl md:text-3xl font-medium drop-shadow-lg">{slide.subtitle}</h2>
-              </div>
+      {/* Content Container */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Text */}
+        <div className="text-center mb-8 lg:mb-12">
+          <h1 className="text-3xl sm:text-4xl  font-bold text-white mb-4 text-balance">
+            {"আবাসিক হোটেলসমূহে অবস্থানের জন্য রুম খুঁজুন"}
+          </h1>
+        </div>
+
+        {/* Booking Form */}
+        <Card className="bg-card/95 backdrop-blur-sm border-0 shadow-2xl p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">
+            {/* Check In */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4 text-primary" />
+                চেক ইন
+              </label>
+              <Input
+                type="date"
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+                className="w-full h-12 text-base"
+                min={new Date().toISOString().split("T")[0]}
+                placeholder="চেক ইন তারিখ"
+              />
+            </div>
+
+            {/* Check Out */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4 text-primary" />
+                চেক আউট
+              </label>
+              <Input
+                type="date"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+                className="w-full h-12 text-base"
+                min={checkIn || new Date().toISOString().split("T")[0]}
+                placeholder="চেক আউট তারিখ"
+              />
+            </div>
+
+            {/* Room Type */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground flex items-center gap-2">
+                <BedIcon className="w-4 h-4 text-primary" />
+                রুমের ধরন
+              </label>
+              <Select value={roomType} onValueChange={setRoomType}>
+                <SelectTrigger className="w-full h-12 text-base">
+                  <SelectValue placeholder="রুম নির্বাচন করুন" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="standard">স্ট্যান্ডার্ড রুম</SelectItem>
+                  <SelectItem value="deluxe">ডিলাক্স রুম</SelectItem>
+                  <SelectItem value="suite">সুইট রুম</SelectItem>
+                  <SelectItem value="family">ফ্যামিলি রুম</SelectItem>
+                  <SelectItem value="presidential">প্রেসিডেন্সিয়াল স্যুট</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Number of Rooms */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground flex items-center gap-2">
+                <UsersIcon className="w-4 h-4 text-primary" />
+                কক্ষের সংখ্যা
+              </label>
+              <Select value={numberOfRooms} onValueChange={setNumberOfRooms}>
+                <SelectTrigger className="w-full h-12 text-base">
+                  <SelectValue placeholder="কক্ষ নির্বাচন করুন" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">1 কক্ষ</SelectItem>
+                  <SelectItem value="2">2 কক্ষ</SelectItem>
+                  <SelectItem value="3">3 কক্ষ</SelectItem>
+                  <SelectItem value="4">4 কক্ষ</SelectItem>
+                  <SelectItem value="5+">5+ কক্ষ</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Search Button */}
+            <div className="flex items-end">
+              <Button
+                onClick={handleSearch}
+                className="w-full h-12 text-base font-semibold bg-primary hover:bg-secondary transition-colors duration-300 shadow-lg hover:shadow-xl"
+                size="lg"
+              >
+                <MapPinIcon className="w-5 h-5 mr-2" />
+                অনুসন্ধান করুন
+              </Button>
             </div>
           </div>
-        ))}
+
+          {/* Mobile Search Button - Full Width on Small Screens */}
+          <div className="lg:hidden mt-4">
+            <Button
+              onClick={handleSearch}
+              className="w-full h-12 text-base font-semibold bg-primary hover:bg-secondary transition-colors duration-300 shadow-lg hover:shadow-xl"
+              size="lg"
+            >
+              <MapPinIcon className="w-5 h-5 mr-2" />
+              হোটেল অনুসন্ধান করুন
+            </Button>
+          </div>
+        </Card>
+
+        {/* Additional Features */}
+        <div className="mt-8 lg:mt-12 text-center">
+          <div className="flex flex-wrap justify-center gap-6 text-white/80">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-accent rounded-full" />
+              <span className="text-sm">ফ্রি ক্যান্সেলেশন</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-accent rounded-full" />
+              <span className="text-sm">সেরা দাম গ্যারান্টি</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-accent rounded-full" />
+              <span className="text-sm">২৪/৭ কাস্টমার সাপোর্ট</span>
+            </div>
+          </div>
+        </div>
       </div>
-
-      {/* Navigation arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full backdrop-blur-sm opacity-70 hover:opacity-100 transition-opacity duration-300"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full backdrop-blur-sm opacity-70 hover:opacity-100 transition-opacity duration-300"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </button>
-
-      {/* Slide indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              currentIndex === index ? "bg-white w-8" : "bg-white/50 hover:bg-white/80"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-    </div>
+    </section>
   )
 }
