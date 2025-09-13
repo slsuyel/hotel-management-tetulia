@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Star, MapPin, Wifi, Car, Coffee, Waves, Heart } from "lucide-react"
+import Link from "next/link"
 
 interface Hotel {
   id: string
@@ -112,9 +113,8 @@ export function HotelResults() {
                       onClick={() => toggleFavorite(hotel.id)}
                     >
                       <Heart
-                        className={`h-4 w-4 ${
-                          favorites.includes(hotel.id) ? "fill-red-500 text-red-500" : "text-gray-600"
-                        }`}
+                        className={`h-4 w-4 ${favorites.includes(hotel.id) ? "fill-red-500 text-red-500" : "text-gray-600"
+                          }`}
                       />
                     </Button>
                     {hotel.isPopular && <Badge className="absolute top-2 left-2 bg-primary">Best Deal</Badge>}
@@ -129,9 +129,8 @@ export function HotelResults() {
                             {Array.from({ length: 5 }).map((_, i) => (
                               <Star
                                 key={i}
-                                className={`h-4 w-4 ${
-                                  i < Math.floor(hotel.rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-                                }`}
+                                className={`h-4 w-4 ${i < Math.floor(hotel.rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                                  }`}
                               />
                             ))}
                           </div>
@@ -172,13 +171,15 @@ export function HotelResults() {
                         </div>
 
                         <div className="space-y-2">
-                          <Button
-                            variant="outline"
-                            className="w-full bg-transparent"
-                           
-                          >
-                            View Details
-                          </Button>
+                          <Link href={`/hotel/123`}>
+                            <Button
+                              variant="outline"
+                              className="w-full bg-transparent"
+
+                            >
+                              View Details
+                            </Button>
+                          </Link>
                           <Button className="w-full">Book Now</Button>
                         </div>
                       </div>
