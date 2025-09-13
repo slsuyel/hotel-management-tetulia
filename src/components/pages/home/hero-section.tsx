@@ -23,7 +23,7 @@ export function HeroSection() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://www.tbsnews.net/sites/default/files/styles/very_big_1/public/images/2021/02/24/panchagarh_is_the_only_place_where_you_can_see_the_himalaya_from_bangladesh._photo_firoz_al_sabah.jpg"
+          src="/main-image.jpg"
           alt="Scenic agricultural landscape"
           className="w-full h-full object-cover"
         />

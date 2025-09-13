@@ -46,6 +46,7 @@ const Header = () => {
       title: "হোম",
       slug: "",
     },
+    { title: "আবাসিক হোটেল", slug: "residential-hotel" },
 
     {
       title: "গ্যালারি",
@@ -55,7 +56,6 @@ const Header = () => {
         { title: "ভিডিও", slug: "gallery/videos" },
       ],
     },
-    { title: "আবাসিক হোটেল", slug: "residential-hotel" },
 
     {
       title: "পরিবহন ব্যবস্থা",
