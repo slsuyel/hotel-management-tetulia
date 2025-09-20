@@ -10,11 +10,6 @@ import { HotelGallery } from "./_components/hotel-gallery";
 import { HotelInfo } from "./_components/hotel-info";
 import { RoomBookingSection } from "./_components/room-booking-section";
 
-// Optional: Create your own components for these tabs or replace with real content
-// import { RoomInfo } from "./_components/room-info";
-// import { HotelFacilities } from "./_components/hotel-facilities";
-// import { HotelRules } from "./_components/hotel-rules";
-// import { HotelReviews } from "./_components/hotel-reviews";
 
 export default function FlightDetailsPage() {
   const searchParams = useSearchParams();
@@ -98,26 +93,6 @@ export default function FlightDetailsPage() {
                   </div>
                 )}
 
-                {activeTab === "rules" && (
-                  <div>
-                    {/* Replace with actual HotelRules component if available */}
-                    <h3 className="text-xl font-semibold mb-4">
-                      Rules & Regulations
-                    </h3>
-                    <p>
-                      Hotel policies, check-in/check-out times, cancellation
-                      policy, etc.
-                    </p>
-                  </div>
-                )}
-
-                {activeTab === "reviews" && (
-                  <div>
-                    {/* Replace with actual HotelReviews component if available */}
-                    <h3 className="text-xl font-semibold mb-4">Reviews</h3>
-                    <p>Customer feedback, ratings, and testimonials go here.</p>
-                  </div>
-                )}
               </div>
             </div>
 
