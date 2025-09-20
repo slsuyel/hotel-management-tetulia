@@ -1,21 +1,43 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Hotels } from "@/constants/hotels"
+import { Button } from "@/components/ui/button";
 
-import { Calendar, Users, Star } from "lucide-react"
-import { Card, CardContent } from "./card"
+import { Calendar, Star, Users } from "lucide-react";
+import { Card, CardContent } from "./card";
 
+export interface THotel {
+  id: number;
+  name: string;
+  description: string;
+  location: string;
+  contact_number: string;
+  email: string;
+  manager_id: null;
+  is_active: boolean;
+  image: string;
+  rooms: Room[];
+}
+
+export interface Room {
+  id: number;
+  room_number: string;
+  room_type: string;
+  price_per_night: string;
+  capacity: string;
+  availability: boolean;
+  description: string;
+  image: string;
+}
 
 interface RoomBookingSectionProps {
-  hotel: Hotels
+  hotel: THotel;
 }
 
 export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
   const handleBookNow = () => {
     // Navigate to booking flow
-    window.location.href = `/hotels/booking?bookingId=${hotel.id}`
-  }
+    window.location.href = `/hotels/booking?bookingId=${hotel.id}`;
+  };
 
   return (
     <div className="sticky top-6">
@@ -24,19 +46,12 @@ export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
           {/* Price Section */}
           <div className="mb-6">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-xl font-bold text-gray-900">${hotel.price}</span>
+              <span className="text-xl font-bold text-gray-900">
+               
+              </span>
               <span className="text-gray-500">per night</span>
             </div>
-            {hotel.discount && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500 line-through">
-                  ${Math.round(hotel.price / (1 - hotel.discount / 100))}
-                </span>
-                <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">
-                  {hotel.discount}% OFF
-                </span>
-              </div>
-            )}
+           
           </div>
 
           {/* Booking Form */}
@@ -75,12 +90,16 @@ export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-4 w-4 ${i < hotel.rating ? "text-yellow-400 fill-current" : "text-gray-300"}`}
+                  className={`h-4 w-4 ${
+                    i < 5
+                      ? "text-yellow-400 fill-current"
+                      : "text-gray-300"
+                  }`}
                 />
               ))}
             </div>
             <span className="text-sm text-gray-600">
-              {hotel.rating} ({hotel.reviews} reviews)
+            
             </span>
           </div>
 
@@ -94,10 +113,12 @@ export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
 
           {/* Additional Info */}
           <div className="mt-4 text-center">
-            <p className="text-xs text-gray-500">Free cancellation until 24 hours before check-in</p>
+            <p className="text-xs text-gray-500">
+              Free cancellation until 24 hours before check-in
+            </p>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

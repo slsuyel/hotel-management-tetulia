@@ -10,13 +10,35 @@ import {
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Image from "next/image";
 import { useState } from "react";
-
-interface HotelGalleryProps {
-  images: string[];
+export interface TRoom {
+  id: number;
+  room_number: string;
+  room_type: string;
+  price_per_night: string;
+  capacity: string;
+  availability: boolean;
+  description: string;
+  image: string;
+}
+interface RoomSectionProps {
+  hotel: {
+    id: number;
+    name: string;
+    rooms: TRoom[];
+  };
 }
 
-export function HotelGallery({ images }: HotelGalleryProps) {
+export function HotelGallery({ hotel }: RoomSectionProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const placeholderImages = [
+    "https://picsum.photos/900",
+    "https://picsum.photos/500",
+    "https://picsum.photos/700",
+    "https://picsum.photos/600",
+    "https://picsum.photos/60",
+    "https://picsum.photos/1",
+  ];
 
   return (
     <>
@@ -29,7 +51,7 @@ export function HotelGallery({ images }: HotelGalleryProps) {
           }}
         >
           <CarouselContent>
-            {images.map((image, index) => (
+            {placeholderImages.map((image, index) => (
               <CarouselItem
                 key={index}
                 className="basis-full sm:basis-1/2 md:basis-1/3"
@@ -50,7 +72,7 @@ export function HotelGallery({ images }: HotelGalleryProps) {
             ))}
           </CarouselContent>
 
-          {images.length > 1 && (
+          {placeholderImages.length > 1 && (
             <>
               <CarouselPrevious className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10" />
               <CarouselNext className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10" />

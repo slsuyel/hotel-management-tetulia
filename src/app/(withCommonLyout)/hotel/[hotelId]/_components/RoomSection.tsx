@@ -1,11 +1,41 @@
 "use client";
 
 import RoomCard from "./room-card";
+export interface TRoom {
+  id: number;
+  room_number: string;
+  room_type: string;
+  price_per_night: string;
+  capacity: string;
+  availability: boolean;
+  description: string;
+  image: string;
+}
+interface RoomSectionProps {
+  hotel: {
+    id: number;
+    name: string;
+    rooms: TRoom[];
+  };
+}
 
-export function RoomSection() {
+export function RoomSection({ hotel }: RoomSectionProps) {
+  const rooms = hotel.rooms ?? [];
+
   return (
-    <>
-      <RoomCard />
-    </>
+    <section className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-2xl font-bold">Available Rooms</h2>
+        <p className="text-muted-foreground text-sm">
+          {rooms.length} room{rooms.length !== 1 && "s"} found
+        </p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {rooms.map((room) => (
+          <RoomCard key={room.id} room={room} />
+        ))}
+      </div>
+    </section>
   );
 }

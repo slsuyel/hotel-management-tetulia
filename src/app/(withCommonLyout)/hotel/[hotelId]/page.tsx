@@ -3,9 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import { getHotelById } from "@/constants/hotels";
-
-import { HotelAmenities } from "./_components/hotel-amenities";
+import { useGetHotelDetailsQuery } from "@/components/Redux/RTK/hotelApi";
+import { HotelLoader } from "@/components/ui/loadingUi";
 import { HotelGallery } from "./_components/hotel-gallery";
 import { HotelInfo } from "./_components/hotel-info";
 import { RoomBookingSection } from "./_components/room-booking-section";
@@ -17,55 +16,57 @@ export interface THotel {
   location: string;
   contact_number: string;
   email: string;
-  image: string;
+  manager_id: null;
   is_active: boolean;
-  created_at: string; // ISO timestamp
-  updated_at: string; // ISO timestamp
+  image: string;
   rooms: TRoom[];
-  manager?: null;
 }
 
 // Room structure
 export interface TRoom {
   id: number;
-  hotel_id: string;
   room_number: string;
   room_type: string;
-  price_per_night: string; // could be number if used for calculation
-  capacity: string; // could be number if needed for logic
+  price_per_night: string;
+  capacity: string;
+  availability: boolean;
   description: string;
   image: string;
-  availability: boolean;
-  created_at: string; // ISO timestamp
-  updated_at: string; // ISO timestamp
 }
 
 export default function FlightDetailsPage() {
   const searchParams = useSearchParams();
   const hotelId = searchParams.get("hotelId") || "1";
-  const hotel = getHotelById(hotelId);
-
+  // const hotel = getHotelById(hotelId);
+  const { data, isLoading } = useGetHotelDetailsQuery(hotelId);
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
     { id: "overview", label: "Overview" },
     { id: "rooms", label: "Room info & Price" },
     { id: "facilities", label: "Facilities" },
-    { id: "rules", label: "Rules & Regulations" },
-    { id: "reviews", label: "Reviews" },
+    // { id: "rules", label: "Rules & Regulations" },
+    // { id: "reviews", label: "Reviews" },
   ];
+  const hotel: THotel = data?.data;
+
+  if (isLoading) {
+    return (
+      <div className=" min-h-screen flex items-center justify-center py-12">
+        <HotelLoader />;
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-50 ">
       <div className="container mx-auto px-4  py-6 md:py-12">
         {hotel ? (
           <>
-            <HotelGallery images={hotel.images} />
+            <HotelGallery hotel={hotel} />
             <div className="flex flex-col lg:flex-row gap-8 mt-6">
               {/* Main Content */}
               <div className="lg:w-2/3">
-                {/* Image Gallery */}
-
                 {/* Navigation Tabs */}
                 <div className="bg-white sticky top-15 z-10 rounded-lg shadow-sm mt-6">
                   <div className="border-b border-gray-200">
@@ -92,14 +93,14 @@ export default function FlightDetailsPage() {
                   {activeTab === "overview" && (
                     <>
                       <HotelInfo hotel={hotel} />
-                      <HotelAmenities
+                      {/* <HotelAmenities
                         amenities={hotel.amenities}
                         features={hotel.features}
-                      />
+                      /> */}
                     </>
                   )}
 
-                  {activeTab === "rooms" && <RoomSection />}
+                  {activeTab === "rooms" && <RoomSection hotel={hotel} />}
 
                   {activeTab === "facilities" && (
                     <div>
