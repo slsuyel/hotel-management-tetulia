@@ -1,45 +1,42 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { ChevronDown, Search, Menu, X, MapPin, Phone } from "lucide-react"
-import Image from "next/image"
+import { ChevronDown, Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export interface TPlace {
   id: number;
   name: string;
 }
 
-
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const [isScrolled, setIsScrolled] = useState(false)
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
-        setIsScrolled(true)
+        setIsScrolled(true);
       } else {
-        setIsScrolled(false)
+        setIsScrolled(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const toggleDropdown = (slug: string) => {
     if (activeDropdown === slug) {
-      setActiveDropdown(null)
+      setActiveDropdown(null);
     } else {
-      setActiveDropdown(slug)
+      setActiveDropdown(slug);
     }
-  }
-
+  };
 
   const navigationItems = [
     {
@@ -62,23 +59,24 @@ const Header = () => {
       slug: "transportation",
     },
     { title: "যোগাযোগ", slug: "contact-us" },
-
-  ]
+  ];
 
   return (
     <>
-
       {/* Main header */}
       <header
-        className={`${isScrolled ? "py-2 shadow-lg bg-white/95 backdrop-blur-sm" : "py-4 bg-white"
-          } sticky top-0 z-50 transition-all duration-300 `}
+        className={`${
+          isScrolled
+            ? "py-2 shadow-lg bg-white/95 backdrop-blur-sm"
+            : "py-4 bg-white"
+        } sticky top-0 z-50 transition-all duration-300 `}
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link href={'/'}>
+            <Link href={"/"}>
               <div className="">
-                <Image src={'/logo.png'} alt="logo" width={160} height={160} />
+                <Image src={"/logo.png"} alt="logo" width={160} height={160} />
               </div>
             </Link>
 
@@ -87,14 +85,15 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <div key={item.slug} className="relative group px-1">
                   {item.children ? (
-                    <div className=" items-center cursor-pointer group py-2 hidden"> {/* flex */}
+                    <div className=" items-center cursor-pointer group py-2 hidden">
+                      {" "}
+                      {/* flex */}
                       <button className="flex items-center px-3 py-2 rounded-md group-hover:bg-emerald-50 transition-colors duration-200">
                         <span className="text-gray-700 group-hover:text-emerald-700 transition-colors duration-200 font-medium">
                           {item.title}
                         </span>
                         <ChevronDown className="ml-1 w-4 h-4 text-emerald-500 group-hover:text-emerald-700 transition-transform duration-300 group-hover:rotate-180" />
                       </button>
-
                       {/* Dropdown for desktop */}
                       <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-xl overflow-hidden z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">
                         <div className="py-2 max-h-[60vh] overflow-y-auto">
@@ -124,13 +123,15 @@ const Header = () => {
 
             {/* Search and Mobile menu buttons */}
             <div className="flex items-center space-x-2">
-
-
               <button
                 className="lg:hidden p-2 text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition-colors duration-200 focus:outline-none"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
               </button>
             </div>
           </div>
@@ -139,7 +140,10 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50" onClick={() => setIsMenuOpen(false)}>
+        <div
+          className="lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50"
+          onClick={() => setIsMenuOpen(false)}
+        >
           <div
             className="absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white shadow-xl overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
@@ -151,7 +155,9 @@ const Header = () => {
                     <span className="text-white font-bold text-lg">পঞ্চ</span>
                   </div>
                   <div>
-                    <h1 className="text-lg font-bold text-gray-800">পঞ্চগড় ভ্রমণ</h1>
+                    <h1 className="text-lg font-bold text-gray-800">
+                      পঞ্চগড় ভ্রমণ
+                    </h1>
                     <p className="text-xs text-emerald-600">পর্যটন গাইড</p>
                   </div>
                 </div>
@@ -166,7 +172,10 @@ const Header = () => {
 
             <div className="py-4">
               {navigationItems.map((item) => (
-                <div key={item.slug} className="border-b border-gray-100 last:border-0">
+                <div
+                  key={item.slug}
+                  className="border-b border-gray-100 last:border-0"
+                >
                   {item.children ? (
                     <div>
                       <button
@@ -175,7 +184,9 @@ const Header = () => {
                       >
                         <span className="font-medium">{item.title}</span>
                         <ChevronDown
-                          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${activeDropdown === item.slug ? "rotate-180" : ""}`}
+                          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                            activeDropdown === item.slug ? "rotate-180" : ""
+                          }`}
                         />
                       </button>
 
@@ -205,14 +216,12 @@ const Header = () => {
                   )}
                 </div>
               ))}
-
-
             </div>
           </div>
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
