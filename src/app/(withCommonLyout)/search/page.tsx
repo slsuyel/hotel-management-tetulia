@@ -1,16 +1,44 @@
 "use client";
 
 import { SearchHeader } from "@/components/Common/SearchHeader";
+import { useSearchHotelsQuery } from "@/components/Redux/RTK/hotelApi";
+import { HotelLoader } from "@/components/ui/loadingUi";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SearchFilters } from "./_components/search-filters";
 import { HotelResults } from "./_components/search-result";
 
+export interface TRoom {
+  id: number;
+  hotel_id: string;
+  room_number: string;
+  room_type: string;
+  price_per_night: string;
+  capacity: string;
+  description: string;
+  image: string;
+  availability: boolean;
+  rooms_available: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface THotel {
+  id: number;
+  name: string;
+  location: string;
+  description: string;
+  contact_number: string;
+  email: string;
+  is_active: boolean;
+  rooms_available: number;
+  rooms: TRoom[];
+}
+
 const SearchPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // State for all filters
   const [filters, setFilters] = useState({
     checkIn: "",
     checkOut: "",
@@ -20,20 +48,19 @@ const SearchPage = () => {
     amenities: [] as string[],
   });
 
-  // Extract all parameters from URL on mount and when URL changes
   useEffect(() => {
     const checkIn = searchParams.get("checkIn") || "";
     const checkOut = searchParams.get("checkOut") || "";
     const roomType = searchParams.get("roomType") || "";
     const numberOfRooms = searchParams.get("numberOfRooms") || "";
 
-    // Parse price range
     const priceMin = searchParams.get("priceMin");
     const priceMax = searchParams.get("priceMax");
     const priceRange: [number, number] = [
       priceMin ? parseInt(priceMin) : 50,
       priceMax ? parseInt(priceMax) : 300,
     ];
+
     const amenitiesParam = searchParams.get("amenities");
     const amenities = amenitiesParam ? amenitiesParam.split(",") : [];
 
@@ -47,10 +74,8 @@ const SearchPage = () => {
     });
   }, [searchParams]);
 
-  // Function to update URL with all filters
   const updateUrlWithFilters = (newFilters: Partial<typeof filters>) => {
     const updatedFilters = { ...filters, ...newFilters };
-
     const params = new URLSearchParams();
 
     if (updatedFilters.checkIn) params.set("checkIn", updatedFilters.checkIn);
@@ -61,11 +86,9 @@ const SearchPage = () => {
     if (updatedFilters.numberOfRooms)
       params.set("numberOfRooms", updatedFilters.numberOfRooms);
 
-    // Add price range
     params.set("priceMin", updatedFilters.priceRange[0].toString());
     params.set("priceMax", updatedFilters.priceRange[1].toString());
 
-    // Add amenities
     if (updatedFilters.amenities.length > 0) {
       params.set("amenities", updatedFilters.amenities.join(","));
     }
@@ -73,7 +96,6 @@ const SearchPage = () => {
     router.push(`/search?${params.toString()}`);
   };
 
-  // Handler for search header changes
   const handleSearchHeaderChange = (headerFilters: {
     checkIn: string;
     checkOut: string;
@@ -83,7 +105,6 @@ const SearchPage = () => {
     updateUrlWithFilters(headerFilters);
   };
 
-  // Handler for filter changes
   const handleFilterChange = (filterChanges: {
     priceRange?: [number, number];
     amenities?: string[];
@@ -91,7 +112,14 @@ const SearchPage = () => {
     updateUrlWithFilters(filterChanges);
   };
 
-  console.log(filters);
+  const { data, error, isLoading, isFetching } = useSearchHotelsQuery({
+    check_in_date: filters.checkIn,
+    check_out_date: filters.checkOut,
+    room_type: filters.roomType,
+    rooms_count: parseInt(filters.numberOfRooms) || 1,
+  });
+
+  const allHotels: THotel[] = data?.data || [];
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -115,7 +143,13 @@ const SearchPage = () => {
             />
           </aside>
           <div className="flex-1">
-            <HotelResults />
+            {isLoading || isFetching ? (
+              <HotelLoader />
+            ) : error ? (
+              <p>Error loading hotels.</p>
+            ) : (
+              <HotelResults hotels={allHotels} />
+            )}
           </div>
         </div>
       </main>

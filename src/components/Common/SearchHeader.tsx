@@ -131,6 +131,7 @@ export function SearchHeader({ initialValues, onSearch }: SearchHeaderProps) {
         {/* Search Button */}
         <div className="flex items-end">
           <Button
+            disabled={!checkIn || !checkOut || !numberOfRooms}
             onClick={handleSearch}
             className="w-full h-12 text-base font-semibold bg-primary hover:bg-secondary transition-colors duration-300 shadow-lg hover:shadow-xl"
             size="lg"

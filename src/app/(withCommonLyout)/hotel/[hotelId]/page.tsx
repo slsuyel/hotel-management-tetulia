@@ -10,7 +10,7 @@ import { HotelGallery } from "./_components/hotel-gallery";
 import { HotelInfo } from "./_components/hotel-info";
 import { RoomBookingSection } from "./_components/room-booking-section";
 import { RoomSection } from "./_components/RoomSection";
-interface THotel {
+export interface THotel {
   id: number;
   name: string;
   description: string;
@@ -26,7 +26,7 @@ interface THotel {
 }
 
 // Room structure
-interface TRoom {
+export interface TRoom {
   id: number;
   hotel_id: string;
   room_number: string;
@@ -56,8 +56,8 @@ export default function FlightDetailsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 mt-14 py-6">
+    <div className="bg-gray-50 ">
+      <div className="container mx-auto px-4  py-6 md:py-12">
         {hotel ? (
           <>
             <HotelGallery images={hotel.images} />
