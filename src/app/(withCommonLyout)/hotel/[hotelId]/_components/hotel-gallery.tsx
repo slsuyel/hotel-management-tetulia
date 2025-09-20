@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -8,67 +16,69 @@ interface HotelGalleryProps {
 }
 
 export function HotelGallery({ images }: HotelGalleryProps) {
-  const [selectedImage, setSelectedImage] = useState(0);
-
-  // const galleryLabels = [
-  //   "Bedroom",
-  //   "Gym Centre",
-  //   "Balcony",
-  //   "Pool Area",
-  //   "Restaurant",
-  //   "Lobby",
-  // ];
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-sm mb-6">
-      {/* Main Image */}
-      <div className="relative h-96 md:h-[500px]">
-        <Image
-          src={images[selectedImage] || "/placeholder.svg?height=500&width=800"}
-          alt="Hotel main view"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute bottom-4 left-4">
-          {/* <span className="bg-red-500 text-white px-3 py-1 rounded text-sm font-medium">
-            {galleryLabels[selectedImage] || "Hotel View"}
-          </span> */}
-        </div>
-        <div className="absolute bottom-4 right-4">
-          <span className="bg-black/70 text-white px-3 py-1 rounded text-sm">
-            {images.length}+ Photos
-          </span>
-        </div>
+    <>
+      <div className="bg-white rounded-lg overflow-hidden shadow-sm mb-6">
+        <Carousel
+          className="w-full"
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            {images.map((image, index) => (
+              <CarouselItem
+                key={index}
+                className="basis-full sm:basis-1/2 md:basis-1/3"
+              >
+                <div
+                  className="relative aspect-video bg-gray-100 cursor-pointer"
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <Image
+                    src={image}
+                    alt={`Hotel image ${index + 1}`}
+                    fill
+                    className="object-cover rounded-lg"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+
+          {images.length > 1 && (
+            <>
+              <CarouselPrevious className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10" />
+              <CarouselNext className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10" />
+            </>
+          )}
+        </Carousel>
       </div>
 
-      {/* Thumbnail Gallery */}
-      <div className="p-4">
-        <div className="grid grid-cols-4 overflow-x-auto scrollbar-hide  md:grid-cols-6 gap-2">
-          {images.slice(0, 6).map((image, index) => (
-            <button
-              key={index}
-              onClick={() => setSelectedImage(index)}
-              className={`relative h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                selectedImage === index
-                  ? "border-primary"
-                  : "border-gray-200 hover:border-gray-300"
-              }`}
-            >
+      {/* Dialog with accessible title */}
+      <Dialog
+        open={!!selectedImage}
+        onOpenChange={() => setSelectedImage(null)}
+      >
+        <DialogContent className="max-w-4xl w-full p-0 bg-black z-50">
+          {/* Visually hidden but accessible DialogTitle */}
+          <DialogTitle className="sr-only">Image Preview</DialogTitle>
+          {selectedImage && (
+            <div className="relative w-full aspect-video">
               <Image
-                src={image || "/placeholder.svg?height=80&width=120"}
-                alt={`Hotel view ${index + 1}`}
+                src={selectedImage}
+                alt="Selected hotel image"
                 fill
-                className="object-cover"
+                className="object-contain rounded-lg"
               />
-              <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                <span className="text-white text-xs font-medium">
-                  {/* {galleryLabels[index] || `View ${index + 1}`} */}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

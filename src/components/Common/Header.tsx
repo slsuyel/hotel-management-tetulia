@@ -69,7 +69,7 @@ const Header = () => {
           isScrolled
             ? "py-2 shadow-lg bg-white/95 backdrop-blur-sm"
             : "py-4 bg-white"
-        } sticky top-0 z-50 transition-all duration-300 `}
+        }  transition-all duration-300 `}
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">

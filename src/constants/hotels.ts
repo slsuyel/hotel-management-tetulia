@@ -77,7 +77,11 @@ export const hotelsData = {
       id: "1",
       name: "The Manhattan Legacy Hotel",
       location: "New York, USA",
-      images: ["https://digital.ihg.com/is/image/ihg/intercontinental-dhaka-8304538615-2x1", "https://upload.wikimedia.org/wikipedia/commons/d/d4/American-Automobile-Association-Logo.svg", "https://static.vecteezy.com/system/resources/previews/018/729/441/non_2x/aaa-letter-logo-creative-design-aaa-unique-design-vector.jpg"],
+      images: [
+        "https://digital.ihg.com/is/image/ihg/intercontinental-dhaka-8304538615-2x1", 
+        "https://upload.wikimedia.org/wikipedia/commons/d/d4/American-Automobile-Association-Logo.svg", 
+        "https://static.dw.com/image/39858860_401.jpg",
+        "https://static.vecteezy.com/system/resources/previews/018/729/441/non_2x/aaa-letter-logo-creative-design-aaa-unique-design-vector.jpg"],
       rating: 5,
       reviews: 1250,
       price: 299,
