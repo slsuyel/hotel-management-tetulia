@@ -6,12 +6,9 @@ const RoomCard = ({ room }: { room: TRoom }) => {
   const totalImages = 2;
 
   const placeholderImages = [
-    "https://picsum.photos/900",
-    "https://picsum.photos/500",
-    "https://picsum.photos/700",
-    "https://picsum.photos/600",
-    "https://picsum.photos/60",
-    "https://picsum.photos/1",
+    "https://picsum.photos/50",
+    "https://picsum.photos/80",
+    "https://picsum.photos/70",
   ];
 
   return (
