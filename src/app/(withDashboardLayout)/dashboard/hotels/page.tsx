@@ -1,114 +1,146 @@
 "use client";
 
+import { useGetAllHotelsQuery } from "@/components/Redux/RTK/hotelApi";
 import { Button } from "@/components/ui/button";
+import { HotelLoader } from "@/components/ui/loadingUi";
 import { Edit, Plus, Trash2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-const fakeHotels = [
-  {
-    id: 1,
-    name: "Oceanview Retreat",
-    location: "Cox's Bazar",
-    description:
-      "A peaceful seaside resort offering stunning views and modern amenities.",
-    contact_number: "01987654321",
-    email: "info@oceanviewretreat.fake",
-    is_active: true,
-    rooms_available: 2,
-  },
-  {
-    id: 2,
-    name: "Mountain Lodge",
-    location: "Chittagong",
-    description:
-      "Cozy mountain lodge with breathtaking views and hiking trails.",
-    contact_number: "01812345678",
-    email: "contact@mountainlodge.fake",
-    is_active: false,
-    rooms_available: 0,
-  },
-  // Add more fake hotels if you want
-];
+export interface THotel {
+  id: number;
+  username: string;
+  name: string;
+  description: string;
+  location: string;
+  contact_number: string;
+  email: string;
+  image: string | null;
+  is_active: boolean;
+  created_at: Date;
+  updated_at: Date;
+  rooms: any[];
+  manager: null;
+}
 
 export default function HotelListPage() {
+  const { data, isLoading } = useGetAllHotelsQuery(undefined);
   const router = useRouter();
-  const [hotels, setHotels] = useState(fakeHotels);
-
   const handleDelete = (id: any) => {
     if (!confirm("Are you sure you want to delete this hotel?")) return;
-    setHotels((prev) => prev.filter((hotel) => hotel.id !== id));
+    // Implement delete logic here (e.g., a RTK mutation)
   };
 
+  if (isLoading) {
+    return <HotelLoader />;
+  }
+
+  const allHotels: THotel[] = data?.data || [];
+
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-semibold">Hotels</h1>
+    <div className="p-8 container mx-auto">
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+          Manage Hotels
+        </h1>
         <Button
-          variant="default"
           onClick={() => router.push("/dashboard/hotels/create-hotel")}
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-2 px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 transition-colors"
         >
-          <Plus className="h-4 w-4" />
-          <span>Create New Hotel</span>
+          <Plus className="h-5 w-5" />
+          <span className="font-medium">Create New Hotel</span>
         </Button>
       </div>
 
-      {hotels.length === 0 && <p>No hotels found. Please add a hotel.</p>}
+      {allHotels.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">
+            No hotels found. Add your first hotel to get started.
+          </p>
+        </div>
+      )}
 
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {hotels.map((hotel) => (
+      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {allHotels.map((hotel) => (
           <div
             key={hotel.id}
-            className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm flex flex-col justify-between"
+            className="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white border border-gray-100 flex flex-col"
           >
-            <div>
-              <h2 className="text-xl font-semibold mb-1">{hotel.name}</h2>
-              <p className="text-gray-600 mb-1">
-                <strong>Location:</strong> {hotel.location}
-              </p>
-              <p className="text-gray-600 mb-1">
-                <strong>Contact:</strong> {hotel.contact_number}
-              </p>
-              <p className="text-gray-600 mb-1">
-                <strong>Email:</strong> {hotel.email}
-              </p>
-              <p className="text-gray-600 mb-1">
-                <strong>Rooms Available:</strong> {hotel.rooms_available}
-              </p>
-              <p
-                className={`mb-2 font-semibold ${
-                  hotel.is_active ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {hotel.is_active ? "Active" : "Inactive"}
-              </p>
-              <p className="text-gray-700 text-sm line-clamp-3">
-                {hotel.description}
-              </p>
+            {/* Image Placeholder */}
+            <div className="relative h-48 w-full">
+              {hotel.image ? (
+                <Image
+                  src={hotel.image}
+                  alt={hotel.name}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-t-xl"
+                />
+              ) : (
+                <div className="bg-gray-200 flex items-center justify-center h-full rounded-t-xl">
+                  <span className="text-gray-500 text-sm">
+                    Image not available
+                  </span>
+                </div>
+              )}
             </div>
 
-            <div className="mt-4 flex space-x-2">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() =>
-                  router.push(`/dashboard/hotels/edit/${hotel.id}`)
-                }
-                className="flex items-center space-x-1"
-              >
-                <Edit className="h-4 w-4" />
-                <span>Edit</span>
-              </Button>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => handleDelete(hotel.id)}
-                className="flex items-center space-x-1"
-              >
-                <Trash2 className="h-4 w-4" />
-                <span>Delete</span>
-              </Button>
+            <div className="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <h2 className="text-2xl font-bold mb-2 text-gray-800">
+                  {hotel.name}
+                </h2>
+                <p className="text-gray-500 mb-4 line-clamp-3">
+                  {hotel.description}
+                </p>
+
+                <div className="space-y-2 text-sm text-gray-600">
+                  <p>
+                    <strong className="font-semibold">Location:</strong>{" "}
+                    {hotel.location}
+                  </p>
+                  <p>
+                    <strong className="font-semibold">Contact:</strong>{" "}
+                    {hotel.contact_number}
+                  </p>
+                  <p>
+                    <strong className="font-semibold">Email:</strong>{" "}
+                    {hotel.email}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between">
+                <span
+                  className={`text-sm font-semibold px-3 py-1 rounded-full ${
+                    hotel.is_active
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {hotel.is_active ? "Active" : "Inactive"}
+                </span>
+                <div className="flex space-x-2">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() =>
+                      router.push(`/dashboard/hotels/edit/${hotel.id}`)
+                    }
+                    className="text-gray-500 hover:text-blue-500 transition-colors"
+                  >
+                    <Edit className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => handleDelete(hotel.id)}
+                    className="text-gray-500 hover:text-red-500 transition-colors"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         ))}

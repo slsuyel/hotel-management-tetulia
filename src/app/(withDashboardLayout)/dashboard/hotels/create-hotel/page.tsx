@@ -56,6 +56,7 @@ export default function CreateHotelPage() {
         toast.success("Hotel created successfully!", {
           description: `Name: ${res.data.name}, ID: ${res.data.id}`,
         });
+        router.push("/dashboard/hotels");
         reset(); // Reset form on success
       } else {
         toast.error("Unexpected response from server", {
