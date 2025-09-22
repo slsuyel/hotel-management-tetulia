@@ -4,7 +4,6 @@ import { RootState } from "../store";
 type TUserInfo = {
   email: string;
   name: string;
-  category: string | null;
   email_verified: boolean;
 };
 

@@ -1,16 +1,16 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import VerifyOtpModal from "@/components/Authentication/VerifyOtpModal";
 import { userLogin } from "@/components/Authentication/userLogin";
-import { toast } from "sonner";
 import { setToken, setUserInfo } from "@/components/Redux/Slice/authSlice";
 import { useAppDispatch } from "@/components/Redux/hooks";
+import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import VerifyOtpModal from "@/components/Authentication/VerifyOtpModal";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface LoginFormInputs {
   email: string;
@@ -59,7 +59,6 @@ const LoginPage = () => {
           setUserInfo({
             email: user.email,
             name: user.name,
-            category: user.category,
             email_verified: user.email_verified,
           })
         );
@@ -86,24 +85,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-purple-900">
       <VerifyOtpModal
         isOpen={isVerifyModal}
         onClose={closeModal}
         loginData={loginData}
       />
-      <div className="fixed inset-0 -z-10">
-        <video
-          autoPlay
-          loop
-          muted
-          className="w-full h-full object-cover"
-          poster="/placeholder.svg?height=1080&width=1920"
-        >
-          <source src="/BackgroundFile/Auth.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-black/30" />
-      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

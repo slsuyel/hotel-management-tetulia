@@ -59,6 +59,7 @@ const Header = () => {
       slug: "transportation",
     },
     { title: "যোগাযোগ", slug: "contact-us" },
+    { title: "login", slug: "auth-login" },
   ];
 
   return (

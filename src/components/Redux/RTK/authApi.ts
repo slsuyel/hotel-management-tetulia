@@ -12,6 +12,16 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["auth"],
     }),
+    adminLogin: builder.mutation({
+      query: (data: any) => {
+        return {
+          url: "/auth/admin/login",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["auth"],
+    }),
 
     resendVerifyOTP: builder.mutation({
       query: (data: any) => ({
@@ -54,4 +64,5 @@ export const {
   useSendPasswordResetEmailMutation,
   useSendResetPasswordMutation,
   useChangePasswordMutation,
+  useAdminLoginMutation
 } = authApi;
