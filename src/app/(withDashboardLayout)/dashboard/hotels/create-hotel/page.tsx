@@ -11,6 +11,7 @@ import {
   EyeOff,
   FileText,
   Hotel,
+  Image,
   Key,
   Mail,
   MapPin,
@@ -28,6 +29,7 @@ type HotelFormData = {
   location: string;
   contact_number: string;
   email: string;
+  image: string;
   username: string;
   password: string;
   is_active: boolean;
@@ -223,6 +225,26 @@ export default function CreateHotelPage() {
                 {errors.username && (
                   <p className="text-red-600 text-sm mt-1">
                     {errors.username.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="image" className="flex items-center gap-2">
+                  <Image size={16} />
+                  Image
+                </Label>
+                <Input
+                  id="image"
+                  placeholder="grandpalace"
+                  {...register("image", {
+                    required: "image is required",
+                  })}
+                  className={cn("mt-1", errors.image && "border-red-500")}
+                  aria-invalid={!!errors.image}
+                />
+                {errors.image && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.image.message}
                   </p>
                 )}
               </div>

@@ -53,6 +53,9 @@ const hotelApi = baseApi.injectEndpoints({
     getAvailableRooms: builder.query({
       query: (hotelId) => `/admin/hotels/${hotelId}/available-rooms`,
     }),
+    getRooms: builder.query({
+      query: () => `/hotel/get/rooms`,
+    }),
   }),
 });
 
@@ -64,5 +67,6 @@ export const {
   useCreateHotelMutation,
   useAddHotelRoomMutation,
   useGetAvailableRoomsQuery,
-  useCreateRoomMutation
+  useCreateRoomMutation,
+  useGetRoomsQuery
 } = hotelApi;

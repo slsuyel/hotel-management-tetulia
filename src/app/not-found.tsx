@@ -1,32 +1,35 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import Link from "next/link"
-import { Home, Search, ArrowLeft, RefreshCw } from "lucide-react"
+import { ArrowLeft, Home, Search } from "lucide-react";
+import Link from "next/link";
+import type React from "react";
+import { useState } from "react";
 
 export default function NotFound() {
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`
-  }
+    e.preventDefault();
+    window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
+  };
 
   const suggestedLinks = [
     { title: "হোম পেইজ", href: "/" },
     { title: "হোটেল তালিকা", href: "/residential-hotel" },
     { title: "পর্যটন স্থানসমূহ", href: "/tourism" },
     { title: "যোগাযোগ করুন", href: "/contact" },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex flex-col items-center justify-center p-4">
       <div className="p-6 sm:p-8">
         <div className="text-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">পাতাটি খুঁজে পাওয়া যায়নি</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+            পাতাটি খুঁজে পাওয়া যায়নি
+          </h2>
           <p className="text-gray-600 max-w-lg mx-auto">
-            আপনি যে পাতাটি খুঁজছেন সেটি বিদ্যমান নেই, অপসারণ করা হয়েছে, নাম পরিবর্তন করা হয়েছে অথবা অস্থায়ীভাবে অনুপলব্ধ।
+            আপনি যে পাতাটি খুঁজছেন সেটি বিদ্যমান নেই, অপসারণ করা হয়েছে, নাম
+            পরিবর্তন করা হয়েছে অথবা অস্থায়ীভাবে অনুপলব্ধ।
           </p>
         </div>
 
@@ -51,8 +54,10 @@ export default function NotFound() {
         </div>
 
         {/* Suggested links */}
-        <div className="mb-8">
-          <h3 className="text-lg font-medium text-gray-800 mb-3 text-center">আপনি যেতে পারেন</h3>
+        <div className="mb-8 hidden">
+          <h3 className="text-lg font-medium text-gray-800 mb-3 text-center">
+            আপনি যেতে পারেন
+          </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {suggestedLinks.map((link, index) => (
               <Link
@@ -63,7 +68,9 @@ export default function NotFound() {
                 {index === 0 ? (
                   <Home className="h-6 w-6 text-primary mb-2" />
                 ) : (
-                  <div className="h-6 w-6 flex items-center justify-center text-primary mb-2">{index + 1}</div>
+                  <div className="h-6 w-6 flex items-center justify-center text-primary mb-2">
+                    {index + 1}
+                  </div>
                 )}
                 <span className="text-gray-700">{link.title}</span>
               </Link>
@@ -87,7 +94,6 @@ export default function NotFound() {
             <ArrowLeft className="h-5 w-5 mr-2" />
             আগের পাতায় ফিরুন
           </button>
-         
         </div>
       </div>
 
@@ -95,11 +101,14 @@ export default function NotFound() {
       <div className="mt-8 text-center text-gray-500 text-sm">
         <p>
           প্রশ্ন আছে?{" "}
-          <Link href="/contact-us" className="text-emerald-600 hover:text-emerald-700 hover:underline">
+          <Link
+            href="/contact-us"
+            className="text-emerald-600 hover:text-emerald-700 hover:underline"
+          >
             আমাদের সাথে যোগাযোগ করুন
           </Link>
         </p>
       </div>
     </div>
-  )
+  );
 }
