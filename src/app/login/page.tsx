@@ -59,6 +59,7 @@ const LoginPage = () => {
           setUserInfo({
             email: user.email,
             name: user.name,
+            role: user.role,
             email_verified: user.email_verified,
           })
         );
