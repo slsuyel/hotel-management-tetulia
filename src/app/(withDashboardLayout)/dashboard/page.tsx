@@ -4,7 +4,6 @@ import { useCurrentUserInfo } from "@/components/Redux/Slice/authSlice";
 
 const page = () => {
   const user = useAppSelector(useCurrentUserInfo);
-  // console.log(user);
   return (
     <div>
       <p>Dashboard {user?.name}</p>

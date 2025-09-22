@@ -30,18 +30,24 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       icon: CalendarCheck,
       label: "Reservations",
     },
-
-    {
-      href: "/dashboard/hotels",
-      icon: Hotel,
-      label: "Hotel",
-    },
-
-    {
-      href: "/dashboard/rooms",
-      icon: House,
-      label: "Rooms",
-    },
+    ...(user?.role === "admin"
+      ? [
+          {
+            href: "/dashboard/hotels",
+            icon: Hotel,
+            label: "Hotel",
+          },
+        ]
+      : []),
+    ...(user?.role === "hotel"
+      ? [
+          {
+            href: "/dashboard/rooms",
+            icon: House,
+            label: "Rooms",
+          },
+        ]
+      : []),
     {
       href: "/dashboard/customers",
       icon: Users,

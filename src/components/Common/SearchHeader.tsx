@@ -96,14 +96,15 @@ export function SearchHeader({ initialValues, onSearch }: SearchHeaderProps) {
             <SelectTrigger className="w-full h-12 text-base">
               <SelectValue placeholder="রুম নির্বাচন করুন" />
             </SelectTrigger>
+
             <SelectContent>
-              <SelectItem value="standard">স্ট্যান্ডার্ড রুম</SelectItem>
-              <SelectItem value="deluxe">ডিলাক্স রুম</SelectItem>
-              <SelectItem value="suite">সুইট রুম</SelectItem>
-              <SelectItem value="family">फ্যামিলি রুম</SelectItem>
-              <SelectItem value="presidential">
-                প্রেসিডেন্সিয়াল স্যুট
-              </SelectItem>
+              <SelectItem value="সিঙ্গেল">সিঙ্গেল</SelectItem>
+              <SelectItem value="ডাবল">ডাবল</SelectItem>
+              <SelectItem value="কাপল">কাপল</SelectItem>
+              <SelectItem value="স্ট্যান্ডার্ড">স্ট্যান্ডার্ড</SelectItem>
+              <SelectItem value="ডিলাক্স">ডিলাক্স</SelectItem>
+              <SelectItem value="ফ্যামিলি">ফ্যামিলি</SelectItem>
+              <SelectItem value="অন্যান্য">অন্যান্য</SelectItem>
             </SelectContent>
           </Select>
         </div>
