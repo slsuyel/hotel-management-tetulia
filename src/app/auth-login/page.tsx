@@ -85,11 +85,10 @@
 //     </div>
 //   );
 // }
-
 "use client";
 
 import { adminLogin } from "@/components/Authentication/adminLogin";
-import { hotelLogin } from "@/components/Authentication/hotelLogin"; // <-- new import
+import { hotelLogin } from "@/components/Authentication/hotelLogin";
 import { useAppDispatch } from "@/components/Redux/hooks";
 import { setToken, setUserInfo } from "@/components/Redux/Slice/authSlice";
 import { Button } from "@/components/ui/button";
@@ -112,7 +111,7 @@ export default function AdminLoginPage() {
     try {
       let res;
 
-      // Call appropriate login function based on role
+      // Role-based login
       if (data.role === "admin") {
         res = await adminLogin(data);
       } else if (data.role === "hotel") {
@@ -127,9 +126,11 @@ export default function AdminLoginPage() {
         dispatch(setToken({ accessToken: res.data.token }));
         dispatch(
           setUserInfo({
-            email: res.data?.hotel?.email,
-            name: res.data?.hotel?.name,
-            email_verified: res.data?.hotel?.email_verified,
+            email: res.data?.admin?.email || res.data?.hotel?.email,
+            name: res.data?.admin?.name || res.data?.hotel?.name,
+            email_verified:
+              res.data?.admin?.email_verified ||
+              res.data?.hotel?.email_verified,
           })
         );
         router.push("/dashboard");
