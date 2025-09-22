@@ -1,18 +1,18 @@
 "use clinet";
-import React, { useEffect, useState } from "react";
-import { Dialog, DialogContent } from "../ui/dialog";
-import Image from "next/image";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   useResendVerifyOTPMutation,
   useVerifyOTPMutation,
 } from "../Redux/RTK/authApi";
-import { useAppDispatch } from "../Redux/hooks";
-import { useRouter } from "next/navigation";
-import { userLogin } from "./userLogin";
 import { setToken, setUserInfo } from "../Redux/Slice/authSlice";
+import { useAppDispatch } from "../Redux/hooks";
+import { Dialog, DialogContent } from "../ui/dialog";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
+import { userLogin } from "./userLogin";
 
 interface VerifyOtpModalProps {
   isOpen: boolean;
@@ -115,7 +115,7 @@ const VerifyOtpModal: React.FC<VerifyOtpModalProps> = ({
             setUserInfo({
               email: user.email,
               name: user.name,
-              category: user.category,
+              role: user.role,
               email_verified: user.email_verified,
             })
           );

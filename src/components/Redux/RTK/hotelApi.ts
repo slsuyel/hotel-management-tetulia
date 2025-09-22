@@ -41,6 +41,13 @@ const hotelApi = baseApi.injectEndpoints({
         body: roomData,
       }),
     }),
+    createRoom: builder.mutation({
+      query: ({ rooms }) => ({
+        url: `/hotel/create/rooms`,
+        method: "POST",
+        body: {rooms},
+      }),
+    }),
 
     // Admin: Get available rooms for a hotel
     getAvailableRooms: builder.query({
@@ -57,4 +64,5 @@ export const {
   useCreateHotelMutation,
   useAddHotelRoomMutation,
   useGetAvailableRoomsQuery,
+  useCreateRoomMutation
 } = hotelApi;

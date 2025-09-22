@@ -16,6 +16,7 @@ export const hotelLogin = async (formData: FieldValues) => {
   );
 
   const hotelInfo = await res.json();
+  // console.log(hotelInfo)
   if (hotelInfo.data.token) {
     (await cookies()).set(authKey, hotelInfo.data.token);
   }

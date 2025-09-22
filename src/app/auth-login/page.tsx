@@ -123,11 +123,13 @@ export default function AdminLoginPage() {
       }
 
       if (res?.data?.token) {
+        // console.log(res.data);
         dispatch(setToken({ accessToken: res.data.token }));
         dispatch(
           setUserInfo({
             email: res.data?.admin?.email || res.data?.hotel?.email,
             name: res.data?.admin?.name || res.data?.hotel?.name,
+            role: res.data?.admin?.role || res.data?.hotel?.role,
             email_verified:
               res.data?.admin?.email_verified ||
               res.data?.hotel?.email_verified,

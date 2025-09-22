@@ -4,6 +4,7 @@ import { RootState } from "../store";
 type TUserInfo = {
   email: string;
   name: string;
+  role: "admin" |"hotel";
   email_verified: boolean;
 };
 
