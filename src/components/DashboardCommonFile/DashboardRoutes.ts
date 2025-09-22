@@ -1,4 +1,11 @@
-import { BookCheck, LayoutDashboard, Plus, Users } from "lucide-react";
+import {
+  BedDouble,
+  BookCheck,
+  CalendarCheck,
+  LayoutDashboard,
+  Hotel ,
+  Users,
+} from "lucide-react";
 
 export const dashboardRoutes = [
   {
@@ -7,13 +14,18 @@ export const dashboardRoutes = [
     label: "Dashboard",
   },
   {
-    href: "/dashboard/created",
-    icon: Plus,
-    label: "Create User",
+    href: "/dashboard/reservations",
+    icon: CalendarCheck,
+    label: "Reservations",
   },
   {
-    href: "/dashboard/users",
+    href: "/dashboard/hotels",
+    icon: Hotel ,
+    label: "Hotel",
+  },
+  {
+    href: "/dashboard/customers",
     icon: Users,
-    label: "All Users",
+    label: "Customers",
   },
 ];

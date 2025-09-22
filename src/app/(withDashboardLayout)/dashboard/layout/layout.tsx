@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
   const user = useAppSelector(useCurrentUserInfo);
-  console.log(user);
+
   return (
     <div className="flex bg-white w-full min-h-screen gap-1 p-1">
       <div
