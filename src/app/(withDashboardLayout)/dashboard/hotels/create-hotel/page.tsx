@@ -4,6 +4,7 @@ import { useCreateHotelMutation } from "@/components/Redux/RTK/hotelApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MediaLibrary } from "@/components/ui/media-manager";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import {
@@ -17,6 +18,7 @@ import {
   MapPin,
   Phone,
   User,
+  X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,7 +36,16 @@ type HotelFormData = {
   password: string;
   is_active: boolean;
 };
-
+interface TFile {
+  _id: string;
+  url: string;
+  key: string;
+  size: number;
+  mimetype: string;
+  title: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+}
 export default function CreateHotelPage() {
   const {
     register,
@@ -42,12 +53,20 @@ export default function CreateHotelPage() {
     watch,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<HotelFormData>();
 
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [createHotel, { isLoading }] = useCreateHotelMutation();
+
+  const handleThumbnail = (files: TFile[]) => {
+    if (files.length > 0) {
+      setValue("image", files[0].url);
+    }
+  };
+
   const onSubmit = async (data: HotelFormData) => {
     setError(null);
 
@@ -80,9 +99,11 @@ export default function CreateHotelPage() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         <header className="flex flex-col items-center p-6 border-b border-gray-200">
           <Hotel size={48} className="text-indigo-600 mb-4" />
-          <h1 className="text-3xl font-bold text-gray-900">Create New Hotel</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            নতুন হোটেল তৈরি করুন
+          </h1>
           <p className="text-gray-500 text-center mt-2">
-            Fill out the details below to add a new hotel to the system.
+            একটি নতুন হোটেল যোগ করতে নিচের তথ্যগুলো পূরণ করুন।
           </p>
         </header>
         <div className="p-6 md:p-8">
@@ -94,7 +115,7 @@ export default function CreateHotelPage() {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-sm font-medium text-red-800">
-                    Submission Error
+                    জমা দেওয়ার সময় ত্রুটি
                   </h3>
                   <div className="mt-2 text-sm text-red-700">
                     <p>{error}</p>
@@ -110,12 +131,12 @@ export default function CreateHotelPage() {
               <div>
                 <Label htmlFor="name" className="flex items-center gap-2">
                   <Hotel size={16} />
-                  Hotel Name
+                  হোটেলের নাম
                 </Label>
                 <Input
                   id="name"
-                  placeholder="Grand Palace Hotel"
-                  {...register("name", { required: "Hotel name is required" })}
+                  placeholder="গ্র্যান্ড প্যালেস হোটেল"
+                  {...register("name", { required: "হোটেলের নাম আবশ্যক" })}
                   className={cn("mt-1", errors.name && "border-red-500")}
                   aria-invalid={!!errors.name}
                 />
@@ -130,13 +151,13 @@ export default function CreateHotelPage() {
               <div>
                 <Label htmlFor="location" className="flex items-center gap-2">
                   <MapPin size={16} />
-                  Location
+                  অবস্থান
                 </Label>
                 <Input
                   id="location"
-                  placeholder="Dhaka, Bangladesh"
+                  placeholder="ঢাকা, বাংলাদেশ"
                   {...register("location", {
-                    required: "Location is required",
+                    required: "অবস্থান আবশ্যক",
                   })}
                   className={cn("mt-1", errors.location && "border-red-500")}
                   aria-invalid={!!errors.location}
@@ -155,16 +176,16 @@ export default function CreateHotelPage() {
                   className="flex items-center gap-2"
                 >
                   <Phone size={16} />
-                  Contact Number
+                  যোগাযোগ নম্বর
                 </Label>
                 <Input
                   id="contact_number"
-                  placeholder="+8801234567890"
+                  placeholder="+৮৮০১২৩৪৫৬৭৮৯০"
                   {...register("contact_number", {
-                    required: "Contact number is required",
+                    required: "যোগাযোগ নম্বর আবশ্যক",
                     pattern: {
                       value: /^[0-9]+$/,
-                      message: "Only numbers allowed",
+                      message: "শুধুমাত্র সংখ্যা অনুমোদিত",
                     },
                   })}
                   className={cn(
@@ -184,17 +205,17 @@ export default function CreateHotelPage() {
               <div>
                 <Label htmlFor="email" className="flex items-center gap-2">
                   <Mail size={16} />
-                  Email
+                  ইমেইল
                 </Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="manager@grandpalace.com"
                   {...register("email", {
-                    required: "Email is required",
+                    required: "ইমেইল আবশ্যক",
                     pattern: {
                       value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                      message: "Invalid email address",
+                      message: "সঠিক ইমেইল দিন",
                     },
                   })}
                   className={cn("mt-1", errors.email && "border-red-500")}
@@ -211,13 +232,13 @@ export default function CreateHotelPage() {
               <div>
                 <Label htmlFor="username" className="flex items-center gap-2">
                   <User size={16} />
-                  Username
+                  ব্যবহারকারীর নাম
                 </Label>
                 <Input
                   id="username"
                   placeholder="grandpalace"
                   {...register("username", {
-                    required: "Username is required",
+                    required: "ব্যবহারকারীর নাম আবশ্যক",
                   })}
                   className={cn("mt-1", errors.username && "border-red-500")}
                   aria-invalid={!!errors.username}
@@ -228,20 +249,41 @@ export default function CreateHotelPage() {
                   </p>
                 )}
               </div>
+
+              {/* Image Upload */}
               <div>
                 <Label htmlFor="image" className="flex items-center gap-2">
                   <Image size={16} />
-                  Image
+                  <MediaLibrary
+                    onSelect={handleThumbnail}
+                    multiple={false}
+                    maxFiles={1}
+                    title="থাম্বনেইল ছবি নির্বাচন করুন"
+                  />
+                  <input
+                    type="hidden"
+                    {...register("image", {
+                      required: "হোটেলের থাম্বনেইল আবশ্যক",
+                    })}
+                  />
                 </Label>
-                <Input
-                  id="image"
-                  placeholder="grandpalace"
-                  {...register("image", {
-                    required: "image is required",
-                  })}
-                  className={cn("mt-1", errors.image && "border-red-500")}
-                  aria-invalid={!!errors.image}
-                />
+                {watch("image") && (
+                  <div className="relative mt-3 w-full h-40 rounded shadow-md border overflow-hidden">
+                    <img
+                      src={watch("image")}
+                      alt="Thumbnail"
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setValue("image", "")}
+                      className="absolute top-1 right-1 bg-red-500 rounded-full p-1 text-white"
+                      aria-label="ছবি মুছুন"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                )}
                 {errors.image && (
                   <p className="text-red-600 text-sm mt-1">
                     {errors.image.message}
@@ -253,18 +295,18 @@ export default function CreateHotelPage() {
               <div className="relative">
                 <Label htmlFor="password" className="flex items-center gap-2">
                   <Key size={16} />
-                  Password
+                  পাসওয়ার্ড
                 </Label>
                 <div className="relative mt-1">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter a strong password"
+                    placeholder="একটি শক্তিশালী পাসওয়ার্ড দিন"
                     {...register("password", {
-                      required: "Password is required",
+                      required: "পাসওয়ার্ড আবশ্যক",
                       minLength: {
                         value: 6,
-                        message: "Password must be at least 6 characters",
+                        message: "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
                       },
                     })}
                     className={cn(errors.password && "border-red-500 pr-10")}
@@ -276,7 +318,7 @@ export default function CreateHotelPage() {
                     className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700"
                     tabIndex={-1}
                     aria-label={
-                      showPassword ? "Hide password" : "Show password"
+                      showPassword ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখান"
                     }
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -294,11 +336,11 @@ export default function CreateHotelPage() {
             <div className="col-span-1 md:col-span-2">
               <Label htmlFor="description" className="flex items-center gap-2">
                 <FileText size={16} />
-                Description
+                বিবরণ
               </Label>
               <Textarea
                 id="description"
-                placeholder="A luxury hotel located in the heart of the city, offering premium services and stunning views."
+                placeholder="শহরের কেন্দ্রে অবস্থিত একটি বিলাসবহুল হোটেল, যেখানে উন্নতমানের সেবা ও চমৎকার দৃশ্য উপভোগ করা যায়।"
                 {...register("description")}
                 rows={4}
                 className="mt-1"
@@ -317,7 +359,7 @@ export default function CreateHotelPage() {
                 htmlFor="is_active"
                 className="ml-2 cursor-pointer flex items-center gap-2"
               >
-                Active
+                Active ?
               </Label>
             </div>
 
@@ -330,10 +372,10 @@ export default function CreateHotelPage() {
               {isLoading ? (
                 <span className="flex items-center gap-2">
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  Creating...
+                  তৈরি হচ্ছে...
                 </span>
               ) : (
-                "Create Hotel"
+                "হোটেল তৈরি করুন"
               )}
             </Button>
           </form>
