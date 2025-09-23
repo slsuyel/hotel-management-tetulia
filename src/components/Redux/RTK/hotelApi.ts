@@ -68,7 +68,7 @@ const hotelApi = baseApi.injectEndpoints({
       providesTags: ["Room"],
     }),
     myHotel: builder.query({
-      query: () => `/hotel/me`,
+      query: () => `/auth/hotel/me`,
     }),
   }),
 });

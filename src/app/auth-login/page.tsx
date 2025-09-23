@@ -94,27 +94,27 @@ import { setToken, setUserInfo } from "@/components/Redux/Slice/authSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const [role, setRole] = useState("admin");
 
   const onSubmit = async (data: any) => {
     setLoading(true);
     setError(null);
     try {
       let res;
-
-      // Role-based login
-      if (data.role === "admin") {
+      if (role === "admin") {
         res = await adminLogin(data);
-      } else if (data.role === "hotel") {
+      } else if (role === "hotel") {
         res = await hotelLogin(data);
       } else {
         setError("Invalid role selected.");
@@ -123,7 +123,6 @@ export default function AdminLoginPage() {
       }
 
       if (res?.data?.token) {
-        // console.log(res.data);
         dispatch(setToken({ accessToken: res.data.token }));
         dispatch(
           setUserInfo({
@@ -159,28 +158,29 @@ export default function AdminLoginPage() {
         )}
 
         <div>
-          <Label className="mb-2 block">Select Role</Label>
-          <div className="flex gap-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
+          <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Select Role
+          </Label>
+          <Tabs value={role} onValueChange={setRole} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 bg-gray-100 dark:bg-gray-800 p-1 rounded-md shadow-inner">
+              <TabsTrigger
                 value="admin"
-                {...register("role", { required: true })}
-                className="accent-blue-600"
-              />
-              <span>Admin</span>
-            </label>
-
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
+                className="text-gray-700 dark:text-gray-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md transition-colors"
+              >
+                Admin
+              </TabsTrigger>
+              <TabsTrigger
                 value="hotel"
-                {...register("role", { required: true })}
-                className="accent-blue-600"
-              />
-              <span>Hotel</span>
-            </label>
-          </div>
+                className="text-gray-700 dark:text-gray-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm rounded-md transition-colors"
+              >
+                Hotel
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Keep content hidden if unused */}
+            <TabsContent value="admin" className="hidden" />
+            <TabsContent value="hotel" className="hidden" />
+          </Tabs>
         </div>
 
         <div>

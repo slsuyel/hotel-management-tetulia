@@ -37,12 +37,13 @@ const Header = () => {
       setActiveDropdown(slug);
     }
   };
-
+  /* হোম - দর্শনীয় স্থান - আবাসিক হোটেল - পরিবহন ব্যবস্থা - গ্যালারি - যোগাযোগ - অন্যান্য - লগইন */
   const navigationItems = [
     {
       title: "হোম",
       slug: "",
     },
+    { title: "দর্শনীয় স্থান ", slug: "tourist-place" },
     { title: "আবাসিক হোটেল", slug: "residential-hotel" },
 
     {
@@ -59,7 +60,7 @@ const Header = () => {
       slug: "transportation",
     },
     { title: "যোগাযোগ", slug: "contact-us" },
-    { title: "login", slug: "auth-login" },
+    { title: "লগইন", slug: "auth-login" },
   ];
 
   return (
