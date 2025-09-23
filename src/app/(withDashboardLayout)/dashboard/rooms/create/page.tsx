@@ -4,7 +4,9 @@ import { useCreateRoomMutation } from "@/components/Redux/RTK/hotelApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MediaLibrary } from "@/components/ui/media-manager";
 import { Textarea } from "@/components/ui/textarea";
+import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,7 +21,16 @@ type Room = {
   availability: boolean;
   image: string;
 };
-
+interface TFile {
+  _id: string;
+  url: string;
+  key: string;
+  size: number;
+  mimetype: string;
+  title: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+}
 type CreateRoomPayload = {
   rooms: {
     room_number: string;
@@ -55,6 +66,14 @@ export default function CreateRoomsPage() {
     const updatedRooms = [...rooms];
     updatedRooms[index][field] = value as never;
     setRooms(updatedRooms);
+  };
+  // Thumbnail selection handler
+  const handleThumbnail = (index: number, files: TFile[]) => {
+    if (files.length > 0) {
+      const updatedRooms = [...rooms];
+      updatedRooms[index].image = files[0].url;
+      setRooms(updatedRooms);
+    }
   };
 
   const addRoom = () => {
@@ -202,15 +221,33 @@ export default function CreateRoomsPage() {
                 </div>
 
                 <div>
-                  <Label>ছবি</Label>
-                  <Input
-                    type="text"
-                    value={room.image}
-                    onChange={(e) =>
-                      handleChange(index, "image", e.target.value)
-                    }
-                    required
+                  <MediaLibrary
+                    onSelect={(files) => handleThumbnail(index, files)}
+                    multiple={false}
+                    maxFiles={1}
+                    title="থাম্বনেইল ছবি নির্বাচন"
                   />
+                  {room.image ? (
+                    <div className="relative mt-3 w-full h-40 rounded shadow-md border overflow-hidden">
+                      <img
+                        src={room.image}
+                        alt="Thumbnail"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updatedRooms = [...rooms];
+                          updatedRooms[index].image = "";
+                          setRooms(updatedRooms);
+                        }}
+                        className="absolute top-1 right-1 bg-red-500 rounded-full p-1 text-white"
+                        aria-label="Remove thumbnail"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
 
