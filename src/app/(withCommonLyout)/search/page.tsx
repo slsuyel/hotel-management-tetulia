@@ -148,7 +148,11 @@ const SearchPage = () => {
             ) : error ? (
               <p>Error loading hotels.</p>
             ) : (
-              <HotelResults hotels={allHotels} />
+              <HotelResults
+                hotels={allHotels}
+                check_in_date={filters.checkIn}
+                check_out_date={filters.checkOut}
+              />
             )}
           </div>
         </div>

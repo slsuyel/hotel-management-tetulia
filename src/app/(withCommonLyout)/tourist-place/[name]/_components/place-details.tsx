@@ -1,121 +1,136 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Image from "next/image"
-import { useState, useRef, useEffect } from "react"
+import { Button } from "@/components/ui/button";
 import {
-  MapPin,
-  Clock,
-  Ticket,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  ArrowUp,
   Calendar,
-  Navigation,
-  Home,
-  Coffee,
-  History,
-  Info,
+  Camera,
   ChevronLeft,
   ChevronRight,
-  Share2,
+  Clock,
+  Coffee,
   Heart,
-  ArrowUp,
-  Camera,
-  Star,
+  History,
+  Home,
+  Info,
+  MapPin,
+  Navigation,
+  Share2,
   Sparkles,
-} from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+  Star,
+  Ticket,
+} from "lucide-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area";
 interface TTouristPlace {
-  id: number
-  category_id: number
-  name: string
-  location: string
-  description: string
-  short_description: string | null
-  history: string
-  architecture: string
-  how_to_go: string
-  where_to_stay: string
-  where_to_eat: string
-  ticket_price: string
-  opening_hours: string
-  best_time_to_visit: string
-  image_url: string
-  gallery: (string | null)[]
-  map_link: string
-  main_attractions: string
-  purpose_and_significance: string
-  special_features: string
+  id: number;
+  category_id: number;
+  name: string;
+  location: string;
+  description: string;
+  short_description: string | null;
+  history: string;
+  architecture: string;
+  how_to_go: string;
+  where_to_stay: string;
+  where_to_eat: string;
+  ticket_price: string;
+  opening_hours: string;
+  best_time_to_visit: string;
+  image_url: string;
+  gallery: (string | null)[];
+  map_link: string;
+  main_attractions: string;
+  purpose_and_significance: string;
+  special_features: string;
 }
 
-export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TTouristPlace }) {
-  const [showFullDescription, setShowFullDescription] = useState(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [imgSrc, setImgSrc] = useState(touristPlace?.image_url || "/placeholder.svg");
+export default function TouristPlaceDetails({
+  touristPlace,
+}: {
+  touristPlace: TTouristPlace;
+}) {
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imgSrc, setImgSrc] = useState(
+    touristPlace?.image_url || "/placeholder.svg"
+  );
 
-  const [isFavorite, setIsFavorite] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const [showBackToTop, setShowBackToTop] = useState(false)
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Handle scroll for back to top button
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
-        setShowBackToTop(true)
+        setShowBackToTop(true);
       } else {
-        setShowBackToTop(false)
+        setShowBackToTop(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    })
-  }
-  const galleryRef = useRef<HTMLDivElement>(null)
+    });
+  };
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll for back to top button
 
   // Gallery navigation
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev === touristPlace?.gallery?.length - 1 ? 0 : prev + 1))
-  }
+    setCurrentImageIndex((prev) =>
+      prev === touristPlace?.gallery?.length - 1 ? 0 : prev + 1
+    );
+  };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? touristPlace?.gallery?.length - 1 : prev - 1))
-  }
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? touristPlace?.gallery?.length - 1 : prev - 1
+    );
+  };
 
   // Handle touch swipe for gallery
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX)
-  }
+    setTouchStart(e.targetTouches[0].clientX);
+  };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
 
   const handleTouchEnd = () => {
     if (touchStart - touchEnd > 50) {
       // Swipe left
-      nextImage()
+      nextImage();
     }
     if (touchStart - touchEnd < -50) {
       // Swipe right
-      prevImage()
+      prevImage();
     }
-  }
+  };
 
   // Navigation sections
   const sections = [
@@ -124,14 +139,14 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
     { id: "gallery", title: "গ্যালারি", icon: <Camera className="h-4 w-4" /> },
     { id: "travel", title: "ভ্রমণ", icon: <Navigation className="h-4 w-4" /> },
     { id: "info", title: "তথ্য", icon: <Ticket className="h-4 w-4" /> },
-  ]
+  ];
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
+    const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <div className="pb-20 md:pb-8">
@@ -146,7 +161,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
           onError={() => setImgSrc("/placeholder.svg")}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{touristPlace?.name}</h1>
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">
+            {touristPlace?.name}
+          </h1>
           <div className="flex items-center text-white mb-2">
             <MapPin className="h-4 w-4 mr-1" />
             <p className="text-sm md:text-base">{touristPlace?.location}</p>
@@ -169,30 +186,40 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
               className="rounded-full bg-black/30 backdrop-blur-sm border-none text-white hover:bg-black/50"
               onClick={() => setIsFavorite(!isFavorite)}
             >
-              <Heart className={`h-5 w-5 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
+              <Heart
+                className={`h-5 w-5 ${
+                  isFavorite ? "fill-red-500 text-red-500" : ""
+                }`}
+              />
             </Button>
             <Sheet>
               <SheetTrigger asChild>
                 <Button
                   size="icon"
                   variant="secondary"
-                  className="rounded-full bg-black/30 backdrop-blur-sm border-none text-white hover:bg-black/50"
+                  className="rounded-full hidden bg-black/30 backdrop-blur-sm border-none text-white hover:bg-black/50"
                 >
                   <Share2 className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="bottom" className="rounded-t-xl">
+              <SheetContent side="bottom" className="rounded-t-xl hidden">
                 <div className="py-4">
                   <h3 className="text-lg font-bold mb-4">শেয়ার করুন</h3>
                   <div className="grid grid-cols-4 gap-4">
-                    {["Facebook", "Twitter", "WhatsApp", "Email"].map((platform) => (
-                      <Button key={platform} variant="outline" className="flex flex-col items-center h-auto py-3">
-                        <div className="h-10 w-10 rounded-full bg-primary/15 flex items-center justify-center mb-2">
-                          <Share2 className="h-5 w-5" />
-                        </div>
-                        <span className="text-xs">{platform}</span>
-                      </Button>
-                    ))}
+                    {["Facebook", "Twitter", "WhatsApp", "Email"].map(
+                      (platform) => (
+                        <Button
+                          key={platform}
+                          variant="outline"
+                          className="flex flex-col items-center h-auto py-3"
+                        >
+                          <div className="h-10 w-10 rounded-full bg-primary/15 flex items-center justify-center mb-2">
+                            <Share2 className="h-5 w-5" />
+                          </div>
+                          <span className="text-xs">{platform}</span>
+                        </Button>
+                      )
+                    )}
                   </div>
                 </div>
               </SheetContent>
@@ -234,7 +261,11 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
             </CardHeader>
             <CardContent>
               <p className="text-muted leading-relaxed">
-                <span dangerouslySetInnerHTML={{ __html: touristPlace?.description }} />
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: touristPlace?.description,
+                  }}
+                />
               </p>
 
               {touristPlace?.description?.length > 150 && (
@@ -253,7 +284,11 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                     <span>মূল আকর্ষণসমূহ</span>
                   </h4>
                   <p className="text-sm rich-content leading-relaxed">
-                    <span dangerouslySetInnerHTML={{ __html: touristPlace?.main_attractions }} />
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: touristPlace?.main_attractions,
+                      }}
+                    />
                   </p>
                 </div>
               )}
@@ -264,7 +299,11 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                     <span>বিশেষ বৈশিষ্ট্য</span>
                   </h4>
                   <p className="text-sm text-muted leading-relaxed">
-                    <span dangerouslySetInnerHTML={{ __html: touristPlace?.special_features }} />
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: touristPlace?.special_features,
+                      }}
+                    />
                   </p>
                 </div>
               )}
@@ -275,9 +314,7 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
         {/* History Section */}
         <section id="history" className="mb-8">
           <Card className="border-none shadow-sm p-2 md:p-3 rounded-md">
-            <CardHeader className="pb-2">
-              
-            </CardHeader>
+            <CardHeader className="pb-2"></CardHeader>
             <CardContent>
               {/* ইতিহাস */}
               {touristPlace?.history && (
@@ -296,7 +333,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                   <h3 className="text-lg font-semibold mb-1">স্থাপত্য</h3>
                   <p
                     className="text-muted leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: touristPlace.architecture }}
+                    dangerouslySetInnerHTML={{
+                      __html: touristPlace.architecture,
+                    }}
                   />
                 </div>
               )}
@@ -304,17 +343,20 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
               {/* লক্ষ্য ও উদ্দেশ্য */}
               {touristPlace?.purpose_and_significance && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-1">লক্ষ্য ও উদ্দেশ্য</h3>
+                  <h3 className="text-lg font-semibold mb-1">
+                    লক্ষ্য ও উদ্দেশ্য
+                  </h3>
                   <div
                     className="leading-relaxed rich-content"
-                    dangerouslySetInnerHTML={{ __html: touristPlace.purpose_and_significance }}
+                    dangerouslySetInnerHTML={{
+                      __html: touristPlace.purpose_and_significance,
+                    }}
                   />
                 </div>
               )}
             </CardContent>
           </Card>
         </section>
-
 
         {/* Gallery Section */}
         <section id="gallery" className="mb-8">
@@ -363,7 +405,11 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
               {touristPlace?.gallery?.map((_, index) => (
                 <button
                   key={index}
-                  className={`h-1.5 rounded-full ${currentImageIndex === index ? "w-4 bg-white" : "w-1.5 bg-white/50"}`}
+                  className={`h-1.5 rounded-full ${
+                    currentImageIndex === index
+                      ? "w-4 bg-white"
+                      : "w-1.5 bg-white/50"
+                  }`}
                   onClick={() => setCurrentImageIndex(index)}
                 />
               ))}
@@ -374,11 +420,17 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
             {touristPlace?.gallery?.map((image, index) => (
               <button
                 key={index}
-                className={`relative h-16 rounded-md overflow-hidden ${currentImageIndex === index ? "ring-2 ring-primary" : ""
-                  }`}
+                className={`relative h-16 rounded-md overflow-hidden ${
+                  currentImageIndex === index ? "ring-2 ring-primary" : ""
+                }`}
                 onClick={() => setCurrentImageIndex(index)}
               >
-                <Image src={image || "/placeholder.svg"} alt={`thumbnail ${index + 1}`} fill className="object-cover" />
+                <Image
+                  src={image || "/placeholder.svg"}
+                  alt={`thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
               </button>
             ))}
           </div>
@@ -401,7 +453,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                   </div>
                   <div>
                     <h3 className="font-medium mb-2 ">কিভাবে যাবেন</h3>
-                    <p className="text-sm  leading-relaxed text-primary">{touristPlace?.how_to_go}</p>
+                    <p className="text-sm  leading-relaxed text-primary">
+                      {touristPlace?.how_to_go}
+                    </p>
                   </div>
                 </div>
 
@@ -411,7 +465,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                   </div>
                   <div>
                     <h3 className="font-medium mb-2">কোথায় থাকবেন</h3>
-                    <p className="text-sm text-muted leading-relaxed">{touristPlace?.where_to_stay}</p>
+                    <p className="text-sm text-muted leading-relaxed">
+                      {touristPlace?.where_to_stay}
+                    </p>
                   </div>
                 </div>
 
@@ -421,7 +477,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                   </div>
                   <div>
                     <h3 className="font-medium mb-2">কোথায় খাবেন</h3>
-                    <p className="text-sm text-muted leading-relaxed">{touristPlace?.where_to_eat}</p>
+                    <p className="text-sm text-muted leading-relaxed">
+                      {touristPlace?.where_to_eat}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -446,7 +504,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">টিকেট মূল্য</h3>
-                    <p className="text-sm text-muted">{touristPlace?.ticket_price}</p>
+                    <p className="text-sm text-muted">
+                      {touristPlace?.ticket_price}
+                    </p>
                   </div>
                 </div>
 
@@ -456,7 +516,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">খোলার সময়</h3>
-                    <p className="text-sm text-muted">{touristPlace?.opening_hours}</p>
+                    <p className="text-sm text-muted">
+                      {touristPlace?.opening_hours}
+                    </p>
                   </div>
                 </div>
 
@@ -466,7 +528,9 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">ভ্রমণের সেরা সময়</h3>
-                    <p className="text-sm text-muted">{touristPlace?.best_time_to_visit}</p>
+                    <p className="text-sm text-muted">
+                      {touristPlace?.best_time_to_visit}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -512,5 +576,5 @@ export default function TouristPlaceDetails({ touristPlace }: { touristPlace: TT
         </Button>
       )}
     </div>
-  )
+  );
 }

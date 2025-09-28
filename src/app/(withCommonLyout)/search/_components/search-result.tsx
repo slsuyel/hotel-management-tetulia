@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { THotel } from "../page";
 
-export function HotelResults({ hotels }: { hotels: THotel[] }) {
+export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
   const [favorites, setFavorites] = useState<string[]>([]);
 
   const toggleFavorite = (hotelId: string) => {
@@ -28,7 +28,7 @@ export function HotelResults({ hotels }: { hotels: THotel[] }) {
       </div>
 
       <div className="grid gap-6">
-        {hotels?.map((hotel) => {
+        {hotels?.map((hotel: THotel) => {
           const price = hotel.rooms.length
             ? Math.min(
                 ...hotel.rooms.map((room) => parseFloat(room.price_per_night))
@@ -133,7 +133,9 @@ export function HotelResults({ hotels }: { hotels: THotel[] }) {
 
                         {/* Buttons */}
                         <div className="space-y-2">
-                          <Link href={`/hotel/${hotel.id}`}>
+                          <Link
+                            href={`/hotel/${hotel.id}?check_in_date=${check_in_date}&check_out_date=${check_out_date}`}
+                          >
                             <Button
                               variant="outline"
                               className="w-full bg-transparent"

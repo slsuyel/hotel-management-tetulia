@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { useGetHotelDetailsQuery } from "@/components/Redux/RTK/hotelApi";
@@ -36,9 +36,15 @@ export interface TRoom {
 
 export default function FlightDetailsPage() {
   const searchParams = useSearchParams();
-  const hotelId = searchParams.get("hotelId") || "1";
-  // const hotel = getHotelById(hotelId);
-  const { data, isLoading } = useGetHotelDetailsQuery(hotelId);
+  const params = useParams();
+  const hotelId = params.hotelId;
+  const check_in_date = searchParams.get("check_in_date");
+  const check_out_date = searchParams.get("check_out_date");
+  const { data, isLoading } = useGetHotelDetailsQuery({
+    hotel_id: hotelId,
+    check_in_date,
+    check_out_date,
+  });
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
