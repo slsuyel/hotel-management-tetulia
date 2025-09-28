@@ -4,13 +4,7 @@ import {
   useGetHotelDetailsQuery,
 } from "@/components/Redux/RTK/hotelApi";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -206,11 +200,8 @@ export default function BookingPage() {
               <CardHeader className=" p-2 md:p-4">
                 <CardTitle className="flex items-center text-xl xl:text-2xl text-gray-800">
                   <User className="w-6 h-6 mr-3 text-blue-500" />
-                  Guest Information
+                  Guests Information (অতিথির তথ্য)
                 </CardTitle>
-                <CardDescription className=" text-xs lg:text-sm">
-                  Enter your details exactly as they appear on your ID.
-                </CardDescription>
               </CardHeader>
               <CardContent className="p-1 md:p-4">
                 <form
@@ -220,7 +211,7 @@ export default function BookingPage() {
                   {/* Name and Email */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-6">
                     <div className=" space-y-1 lg:space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
+                      <Label htmlFor="name">সম্পূর্ণ নাম</Label>
                       <Input
                         id="name"
                         type="text"
@@ -231,7 +222,7 @@ export default function BookingPage() {
                       />
                     </div>
                     <div className=" space-y-1 lg:space-y-2">
-                      <Label htmlFor="email">Email Address</Label>
+                      <Label htmlFor="email">ইমেইল ঠিকানা</Label>
                       <Input
                         id="email"
                         type="email"
@@ -246,7 +237,7 @@ export default function BookingPage() {
                   {/* Phone and Special Requests */}
                   <div className="space-y-4">
                     <div className=" space-y-1 lg:space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label htmlFor="phone">ফোন নম্বর</Label>
                       <Input
                         id="phone"
                         type="tel"
@@ -259,7 +250,7 @@ export default function BookingPage() {
 
                     <div className=" space-y-1 lg:space-y-2">
                       <Label htmlFor="special_requests">
-                        Special Requests (Optional)
+                        বিশেষ অনুরোধ (ঐচ্ছিক)
                       </Label>
                       <Textarea
                         id="special_requests"
@@ -281,14 +272,14 @@ export default function BookingPage() {
                       <>
                         <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                         <span className="text-sm sm:text-base">
-                          Processing Reservation...
+                          প্রসেসিং রিজার্ভেশন...
                         </span>
                       </>
                     ) : (
                       <>
                         <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                         <span className="text-sm sm:text-base">
-                          Confirm Reservation
+                          রিজার্ভেশন কনফার্ম করুন
                         </span>
                       </>
                     )}
@@ -307,24 +298,24 @@ export default function BookingPage() {
           <div className="lg:col-span-1 space-y-3 lg:space-y-6 lg:sticky lg:top-10">
             {/* Reservation Summary Card */}
             <Card className="bg-blue-50/70 border-blue-200 shadow-md p-1 md:p-2">
-              <CardHeader className="border-b  p-2 md:p-4">
-                <CardTitle className="flex items-center  text-blue-700 text-xl xl:text-2xl">
+              <CardHeader className="border-b  p-2 md:p-4">
+                <CardTitle className="flex items-center  text-blue-700 text-xl xl:text-2xl">
                   <Calendar className="w-5 h-5 mr-2" />
-                  Your Stay Details
+                  আপনার থাকার বিবরণ
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-4 space-y-2 lg:space-y-3 text-gray-700 p-2 md:p-4">
                 <div className="flex justify-between">
-                  <span className="font-medium">Check-in:</span>
+                  <span className="font-medium">চেক-ইন:</span>
                   <span className="font-semibold">{check_in_date}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-medium">Check-out:</span>
+                  <span className="font-medium">চেক-আউট:</span>
                   <span className="font-semibold">{check_out_date}</span>
                 </div>
                 <Separator className="my-2" />
                 <div className="flex justify-between text-base lg:text-lg font-bold text-gray-900">
-                  <span>Room ID:</span>
+                  <span>রুম আইডি:</span>
                   <span>#{room_id}</span>
                 </div>
               </CardContent>
@@ -338,7 +329,7 @@ export default function BookingPage() {
                   {hotel.name}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="  p-2 md:p-4">
+              <CardContent className="  p-2 md:p-4">
                 <div className="h-32 bg-gray-100 rounded-lg overflow-hidden mb-4">
                   {hotel.image ? (
                     <img

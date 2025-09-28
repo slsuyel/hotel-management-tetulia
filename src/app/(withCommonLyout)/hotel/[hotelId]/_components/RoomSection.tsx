@@ -1,5 +1,6 @@
 "use client";
 
+import { THotel } from "../page";
 import RoomCard from "./room-card";
 export interface TRoom {
   id: number;
@@ -12,11 +13,7 @@ export interface TRoom {
   image: string;
 }
 interface RoomSectionProps {
-  hotel: {
-    id: number;
-    name: string;
-    rooms: TRoom[];
-  };
+  hotel: THotel;
   check_in_date: string | null;
   check_out_date: string | null;
 }
@@ -37,7 +34,7 @@ export function RoomSection({
         </p>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3  lg:grid-cols-2">
         {rooms.map((room) => (
           <RoomCard
             key={room.id}

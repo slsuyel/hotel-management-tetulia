@@ -2,116 +2,108 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { THotel, TRoom } from "../page";
+
 interface RoomCardProps {
   room: TRoom;
   hotel: THotel;
   check_in_date: string | null;
   check_out_date: string | null;
 }
+
 const RoomCard = ({
   room,
+  hotel,
   check_in_date,
   check_out_date,
-  hotel,
 }: RoomCardProps) => {
   const [activeImage, setActiveImage] = useState(1);
-  const totalImages = 2;
+  const totalImages = 3;
 
   const placeholderImages = [
-    "https://picsum.photos/50",
-    "https://picsum.photos/80",
-    "https://picsum.photos/70",
+    "https://picsum.photos/400/300",
+    "https://picsum.photos/401/300",
+    "https://picsum.photos/402/300",
   ];
-  console.log(hotel.id);
-  console.log(room.id);
+
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-sm w-full mx-auto">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden w-full max-w-md mx-auto transition hover:shadow-lg">
       {/* Image Section */}
       <div className="relative">
         <Image
           width={400}
-          height={400}
+          height={300}
           src={placeholderImages[activeImage - 1]}
           alt={`Room Image ${activeImage}`}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 sm:h-56 object-cover"
         />
-        <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
+        <div className="absolute top-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
           {activeImage}/{totalImages}
         </div>
       </div>
 
-      {/* Room Details */}
-      <div className=" p-2 md:p-4">
-        <h2 className="text-xl font-semibold text-gray-800">
-          {room.room_type} - Room #{room.room_number}
-        </h2>
-        <p className="text-sm text-gray-500 mt-1">
-          Sleeps {room.capacity} &bull; 183 sq ft{" "}
-          {/* You can make sq ft dynamic if available */}
-        </p>
+      {/* Room Info */}
+      <div className="p-4 space-y-3">
+        <div>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
+            {room.room_type} - Room #{room.room_number}
+          </h2>
+          <p className="text-sm text-gray-500">Sleeps {room.capacity}</p>
+        </div>
 
-        <div className="flex items-center text-gray-700 mt-2 lg:mt-4">
-          <span className="text-xl mr-2">🛏️</span>
-          <span className="font-semibold">
+        <div className="flex items-center gap-2 text-gray-700">
+          <span className="text-xl">🛏️</span>
+          <span className="font-medium text-sm sm:text-base">
             {parseInt(room.capacity) > 2 ? "2 Queen Beds" : "1 King Bed"}
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-2 mt-2 lg:mt-4 text-sm text-gray-700">
+        <div className="flex flex-wrap gap-2 mt-2">
           {[
             { icon: "☕", label: "Breakfast Included" },
             { icon: "📶", label: "Free WiFi" },
             { icon: "🅿️", label: "Free Parking" },
-          ].map((item, index) => (
+          ].map((item, idx) => (
             <div
-              key={index}
-              className="flex items-center gap-2 border border-gray-300 rounded-full px-3 py-1 bg-white shadow-sm"
+              key={idx}
+              className="flex items-center gap-2 border border-gray-300 rounded-full px-3 py-1 text-sm bg-white shadow-sm"
             >
-              <span className="text-green-500 text-sm lg:text-base">
-                {item.icon}
-              </span>
-              <span className="  text-xs lg:text-sm">{item.label}</span>
+              <span className="text-green-500">{item.icon}</span>
+              <span className="text-gray-700">{item.label}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <hr className="border-gray-200" />
+      <hr className="border-gray-200 my-2" />
 
-      {/* Price and Booking Section */}
-      <div className=" p-2 md:p-4 bg-gray-50">
-        <div className="flex justify-between items-start">
+      {/* Pricing & Booking */}
+      <div className="p-4 bg-gray-50 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
           <div>
-            <p className="text-blue-600 font-semibold">Fully Refundable</p>
-            <p className="text-xs text-gray-500 mt-1">
-              until September 21 at 11:59pm
+            <p className="text-green-600 font-semibold text-sm sm:text-base">
+              Fully Refundable
+            </p>
+            <p className="text-xs text-gray-500">
+              Until September 21 at 11:59pm
             </p>
           </div>
+
           <div className="text-right">
-            <span className="text-2xl font-bold text-blue-600">
+            <p className="text-xl font-bold text-blue-600">
               ${room.price_per_night}
-            </span>
-            <p className="text-sm text-gray-500 line-through mt-1">
+            </p>
+            <p className="text-xs text-gray-500 line-through">
               ${parseInt(room.price_per_night) + 200} for 5 nights
             </p>
           </div>
         </div>
-        {room.availability ? (
-          <p className="text-xs text-red-500 text-center mt-2">
-            5 left at this price for this room on our site
-          </p>
-        ) : (
-          <p className="text-xs text-red-500 text-center mt-2">
-            Currently unavailable
-          </p>
-        )}
 
-        <div className="flex justify-center mt-2 md:mt-4 px-4 sm:px-0">
+        <div className="mt-2">
           <Link
             href={`/hotel/booking/${room.id}?hotel_id=${hotel.id}&check_in_date=${check_in_date}&check_out_date=${check_out_date}`}
           >
             <button
-              className={`w-full max-w-xs sm:max-w-sm py-3 rounded-md font-semibold shadow-md transition duration-300 text-sm sm:text-base ${
+              className={`w-full py-3 rounded-md font-semibold text-sm sm:text-base transition-all ${
                 room.availability
                   ? "bg-green-600 text-white hover:bg-green-700"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -122,12 +114,6 @@ const RoomCard = ({
             </button>
           </Link>
         </div>
-      </div>
-
-      {/* Breakfast Icon */}
-      <div className=" p-2 md:p-4 flex items-center bg-gray-100">
-        <span className="text-green-600 text-2xl mr-2">✨</span>
-        <p className="text-sm text-gray-700">Price includes breakfast</p>
       </div>
     </div>
   );
