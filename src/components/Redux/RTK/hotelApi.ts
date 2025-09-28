@@ -75,6 +75,17 @@ const hotelApi = baseApi.injectEndpoints({
     myHotel: builder.query({
       query: () => `/auth/hotel/me`,
     }),
+
+    bookingRoom: builder.mutation({
+      query: ({ bookingData }) => ({
+        url: `hotel/bookings`,
+        method: "POST",
+        body: { bookingData },
+      }),
+      invalidatesTags: ["Room"],
+    }),
+
+
   }),
 });
 
@@ -89,5 +100,6 @@ export const {
   useCreateRoomMutation,
   useGetRoomsQuery,
   useMyHotelQuery,
-  useGetAllHotelsPublicQuery
+  useGetAllHotelsPublicQuery,
+  useBookingRoomMutation
 } = hotelApi;

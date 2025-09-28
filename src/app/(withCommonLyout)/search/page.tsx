@@ -124,7 +124,7 @@ const SearchPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <main className="container mx-auto px-4 py-6 space-y-6">
+      <main className="container mx-auto px-2 py-6  space-y-3 lg:space-y-6">
         <SearchHeader
           initialValues={{
             checkIn: filters.checkIn,

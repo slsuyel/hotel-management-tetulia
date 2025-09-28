@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BedDouble, Heart, MapPin, Star } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { THotel } from "../page";
@@ -19,15 +20,17 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">
+    <div className=" space-y-4 lg:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mt-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
           Found {hotels?.length} hotel{hotels.length !== 1 ? "s" : ""}
         </h2>
-        <p className="text-muted-foreground">All prices are in USD</p>
+        <p className="text-sm sm:text-base text-gray-500">
+          All prices are in USD
+        </p>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-3 lg:gap-6">
         {hotels?.map((hotel: THotel) => {
           const price = hotel.rooms.length
             ? Math.min(
@@ -47,7 +50,9 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
                 <div className="flex flex-col md:flex-row">
                   {/* Image + Favorite Button */}
                   <div className="relative md:w-80 h-48 md:h-auto">
-                    <img
+                    <Image
+                      height={400}
+                      width={400}
                       src={hotelImage}
                       alt={hotel.name}
                       className="w-full h-full object-cover"
@@ -69,20 +74,21 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
                   </div>
 
                   {/* Details Section */}
-                  <div className="flex-1 p-6">
+                  <div className="flex-1 p-2 lg:p-6">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                       {/* Left Section */}
                       <div className="flex-1 space-y-2">
                         {/* Name & Rating */}
-                        <div className="flex items-center justify-between">
-                          <h3 className="text-xl font-semibold">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mt-2">
+                          <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
                             {hotel.name}
                           </h3>
+
                           <div className="flex items-center gap-1">
                             {Array.from({ length: 5 }).map((_, i) => (
                               <Star
                                 key={i}
-                                className={`h-4 w-4 ${
+                                className={`w-4 h-4 sm:w-5 sm:h-5 ${
                                   i < 4
                                     ? "fill-yellow-400 text-yellow-400"
                                     : "text-gray-300"
