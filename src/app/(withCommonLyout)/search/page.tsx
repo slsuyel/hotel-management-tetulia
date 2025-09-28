@@ -30,6 +30,7 @@ export interface THotel {
   description: string;
   contact_number: string;
   email: string;
+  image: string;
   is_active: boolean;
   rooms_available: number;
   rooms: TRoom[];

@@ -35,7 +35,7 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
               )
             : "N/A";
 
-          const hotelImage = "/placeholder.svg";
+          const hotelImage = hotel.image || "/placeholder.svg";
           const hotelId = hotel.id.toString();
 
           return (
