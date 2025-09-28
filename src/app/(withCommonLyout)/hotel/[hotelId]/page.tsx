@@ -66,15 +66,15 @@ export default function DetailsPage() {
 
   return (
     <div className="bg-gray-50 ">
-      <div className="container mx-auto px-4  py-6 md:py-12">
+      <div className="container mx-auto px-2 md:px-4  py-6 md:py-12">
         {hotel ? (
           <>
             <HotelGallery hotel={hotel} />
-            <div className="flex flex-col lg:flex-row gap-8 mt-6">
+            <div className="flex flex-col lg:flex-row gap-3 lg:gap-6 mt-2 lg:mt-6">
               {/* Main Content */}
               <div className="lg:w-2/3">
                 {/* Navigation Tabs */}
-                <div className="bg-white sticky top-15 z-10 rounded-lg shadow-sm mt-6">
+                <div className="bg-white sticky top-0 z-10 rounded-lg shadow-sm ">
                   <div className="border-b border-gray-200">
                     <nav className="flex overflow-x-auto scrollbar-hide space-x-8 px-6">
                       {tabs.map((tab) => (
@@ -95,7 +95,7 @@ export default function DetailsPage() {
                 </div>
 
                 {/* Tab Content */}
-                <div className="mt-6 space-y-6">
+                <div className=" mt-2 lg:mt-5 space-y-3 lg:space-y-6">
                   {activeTab === "overview" && (
                     <>
                       <HotelInfo hotel={hotel} />
@@ -115,9 +115,11 @@ export default function DetailsPage() {
                   )}
 
                   {activeTab === "facilities" && (
-                    <div>
+                    <div className=" p-2 rounded-md bg-white">
                       {/* Replace with actual HotelFacilities component if available */}
-                      <h3 className="text-xl font-semibold mb-4">Facilities</h3>
+                      <h3 className=" text-lg lg:text-xl font-semibold mb-2 lg:mb-4">
+                        Facilities
+                      </h3>
                       <p>
                         Information about hotel facilities (e.g., gym, pool,
                         restaurant, etc.).
@@ -127,8 +129,7 @@ export default function DetailsPage() {
                 </div>
               </div>
 
-              {/* Booking Sidebar */}
-              <div className="lg:w-1/3">
+              <div className="lg:w-1/3 bg-white">
                 <RoomBookingSection
                   hotel={hotel}
                   check_in_date={check_in_date}

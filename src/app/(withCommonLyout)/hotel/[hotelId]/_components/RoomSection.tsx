@@ -26,9 +26,9 @@ export function RoomSection({
   const rooms = hotel.rooms ?? [];
 
   return (
-    <section className="space-y-6">
+    <section className=" space-y-3 lg:space-y-5 bg-white p-2 rounded-md">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-2xl font-bold">Available Rooms</h2>
+        <h2 className=" text-lg lg:text-xl font-bold">Available Rooms</h2>
         <p className="text-muted-foreground text-sm">
           {rooms.length} room{rooms.length !== 1 && "s"} found
         </p>

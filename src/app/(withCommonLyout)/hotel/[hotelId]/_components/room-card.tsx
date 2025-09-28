@@ -42,7 +42,7 @@ const RoomCard = ({
       </div>
 
       {/* Room Info */}
-      <div className="p-4 space-y-3">
+      <div className=" p-2 lg:p-4 space-y-2 lg:space-y-3">
         <div>
           <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
             {room.room_type} - Room #{room.room_number}
@@ -77,7 +77,7 @@ const RoomCard = ({
       <hr className="border-gray-200 my-2" />
 
       {/* Pricing & Booking */}
-      <div className="p-4 bg-gray-50 space-y-3">
+      <div className="p-2 lg:p-4 bg-gray-50 space-y-2 lg:space-y-3">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
           <div>
             <p className="text-green-600 font-semibold text-sm sm:text-base">
