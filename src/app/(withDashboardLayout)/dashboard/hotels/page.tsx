@@ -3,7 +3,7 @@
 import { useGetAllHotelsQuery } from "@/components/Redux/RTK/hotelApi";
 import { Button } from "@/components/ui/button";
 import { HotelLoader } from "@/components/ui/loadingUi";
-import { Edit, Plus, Trash2 } from "lucide-react";
+import { Edit, Hotel, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -38,9 +38,9 @@ export default function HotelListPage() {
   const allHotels: THotel[] = data?.data || [];
 
   return (
-    <div className="p-8 container mx-auto">
+    <div className=" container mx-auto ">
       <div className="flex justify-between items-center mb-10">
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+        <h1 className=" text-xl mt-4 lg:text-2xl font-extrabold text-gray-900 tracking-tight">
           Manage Hotels
         </h1>
         <Button
@@ -60,7 +60,7 @@ export default function HotelListPage() {
         </div>
       )}
 
-      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 lg:gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {allHotels.map((hotel) => (
           <div
             key={hotel.id}
@@ -121,6 +121,16 @@ export default function HotelListPage() {
                   {hotel.is_active ? "Active" : "Inactive"}
                 </span>
                 <div className="flex space-x-2">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() =>
+                      router.push(`/dashboard/reservations/${hotel.id}`)
+                    }
+                    className="text-gray-500 hover:text-blue-500 transition-colors"
+                  >
+                    <Hotel className="h-5 w-5" />
+                  </Button>
                   <Button
                     size="icon"
                     variant="ghost"

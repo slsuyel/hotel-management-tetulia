@@ -20,6 +20,14 @@ const hotelApi = baseApi.injectEndpoints({
       query: () => "/admin/hotels",
       providesTags: ["Hotel"],
     }),
+
+    getHotelBooking: builder.query({
+      query: ({id,page}) => `/admin/get/bookings/lists?hotel_id=${id}?page=${page}`,
+    
+    }),
+
+
+
     getAllHotelsPublic: builder.query({
       query: () => "/hotels",
       
@@ -101,5 +109,6 @@ export const {
   useGetRoomsQuery,
   useMyHotelQuery,
   useGetAllHotelsPublicQuery,
-  useBookingRoomMutation
+  useBookingRoomMutation,
+  useGetHotelBookingQuery
 } = hotelApi;
