@@ -80,7 +80,7 @@ const hotelApi = baseApi.injectEndpoints({
       query: ({ bookingData }) => ({
         url: `hotel/bookings`,
         method: "POST",
-        body: { bookingData },
+        body: bookingData ,
       }),
       invalidatesTags: ["Room"],
     }),

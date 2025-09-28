@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 
-import { Calendar, Star, Users } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Card, CardContent } from "./card";
 
 export interface THotel {
@@ -31,14 +31,15 @@ export interface Room {
 
 interface RoomBookingSectionProps {
   hotel: THotel;
+  check_in_date: string | null;
+  check_out_date: string | null;
 }
 
-export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
-  const handleBookNow = () => {
-    // Navigate to booking flow
-    window.location.href = `/hotels/booking?bookingId=${hotel.id}`;
-  };
-
+export function RoomBookingSection({
+  hotel,
+  check_in_date,
+  check_out_date,
+}: RoomBookingSectionProps) {
   return (
     <div className="sticky top-6">
       <Card className="shadow-lg">
@@ -59,48 +60,21 @@ export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
                 <div className="text-xs text-gray-500 mb-1">CHECK-IN</div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm">Feb 25</span>
+                  <span className="text-sm">{check_in_date}</span>
                 </div>
               </div>
               <div className="border border-border-color rounded-lg p-3">
                 <div className="text-xs text-gray-500 mb-1">CHECK-OUT</div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm">Feb 27</span>
+                  <span className="text-sm">{check_out_date}</span>
                 </div>
               </div>
             </div>
-
-            {/* Guests */}
-            <div className="border border-border-color rounded-lg p-3">
-              <div className="text-xs text-gray-500 mb-1">GUESTS</div>
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-gray-400" />
-                <span className="text-sm">2 Adults, 1 Child</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Rating */}
-          <div className="flex items-center gap-2 mb-6">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-4 w-4 ${
-                    i < 5 ? "text-yellow-400 fill-current" : "text-gray-300"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-sm text-gray-600"></span>
           </div>
 
           {/* Book Button */}
-          <Button
-            onClick={handleBookNow}
-            className="w-full bg-primary hover:bg-secondary hover:text-white text-white py-3 text-lg font-semibold"
-          >
+          <Button className="w-full bg-primary hover:bg-secondary hover:text-white text-white py-3 text-lg font-semibold">
             Book Now
           </Button>
 

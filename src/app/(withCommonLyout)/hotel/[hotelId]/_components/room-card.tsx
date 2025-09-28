@@ -1,7 +1,19 @@
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { TRoom } from "../page";
-
-const RoomCard = ({ room }: { room: TRoom }) => {
+import { THotel, TRoom } from "../page";
+interface RoomCardProps {
+  room: TRoom;
+  hotel: THotel;
+  check_in_date: string | null;
+  check_out_date: string | null;
+}
+const RoomCard = ({
+  room,
+  check_in_date,
+  check_out_date,
+  hotel,
+}: RoomCardProps) => {
   const [activeImage, setActiveImage] = useState(1);
   const totalImages = 2;
 
@@ -10,12 +22,15 @@ const RoomCard = ({ room }: { room: TRoom }) => {
     "https://picsum.photos/80",
     "https://picsum.photos/70",
   ];
-
+  console.log(hotel.id);
+  console.log(room.id);
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-sm w-full mx-auto">
       {/* Image Section */}
       <div className="relative">
-        <img
+        <Image
+          width={400}
+          height={400}
           src={placeholderImages[activeImage - 1]}
           alt={`Room Image ${activeImage}`}
           className="w-full h-48 object-cover"
@@ -92,16 +107,20 @@ const RoomCard = ({ room }: { room: TRoom }) => {
         )}
 
         <div className="flex justify-center mt-2 md:mt-4 px-4 sm:px-0">
-          <button
-            className={`w-full max-w-xs sm:max-w-sm py-3 rounded-md font-semibold shadow-md transition duration-300 text-sm sm:text-base ${
-              room.availability
-                ? "bg-green-600 text-white hover:bg-green-700"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
-            disabled={!room.availability}
+          <Link
+            href={`/hotel/booking/${room.id}?hotel_id=${hotel.id}&check_in_date=${check_in_date}&check_out_date=${check_out_date}`}
           >
-            {room.availability ? "Book Now" : "Unavailable"}
-          </button>
+            <button
+              className={`w-full max-w-xs sm:max-w-sm py-3 rounded-md font-semibold shadow-md transition duration-300 text-sm sm:text-base ${
+                room.availability
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+              disabled={!room.availability}
+            >
+              {room.availability ? "Book Now" : "Unavailable"}
+            </button>
+          </Link>
         </div>
       </div>
 

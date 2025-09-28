@@ -17,9 +17,15 @@ interface RoomSectionProps {
     name: string;
     rooms: TRoom[];
   };
+  check_in_date: string | null;
+  check_out_date: string | null;
 }
 
-export function RoomSection({ hotel }: RoomSectionProps) {
+export function RoomSection({
+  hotel,
+  check_in_date,
+  check_out_date,
+}: RoomSectionProps) {
   const rooms = hotel.rooms ?? [];
 
   return (
@@ -33,7 +39,13 @@ export function RoomSection({ hotel }: RoomSectionProps) {
 
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {rooms.map((room) => (
-          <RoomCard key={room.id} room={room} />
+          <RoomCard
+            key={room.id}
+            room={room}
+            hotel={hotel}
+            check_in_date={check_in_date}
+            check_out_date={check_out_date}
+          />
         ))}
       </div>
     </section>

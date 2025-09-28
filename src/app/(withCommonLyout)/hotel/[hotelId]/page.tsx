@@ -34,7 +34,7 @@ export interface TRoom {
   image: string;
 }
 
-export default function FlightDetailsPage() {
+export default function DetailsPage() {
   const searchParams = useSearchParams();
   const params = useParams();
   const hotelId = params.hotelId;
@@ -106,7 +106,13 @@ export default function FlightDetailsPage() {
                     </>
                   )}
 
-                  {activeTab === "rooms" && <RoomSection hotel={hotel} />}
+                  {activeTab === "rooms" && (
+                    <RoomSection
+                      hotel={hotel}
+                      check_in_date={check_in_date}
+                      check_out_date={check_out_date}
+                    />
+                  )}
 
                   {activeTab === "facilities" && (
                     <div>
@@ -123,7 +129,11 @@ export default function FlightDetailsPage() {
 
               {/* Booking Sidebar */}
               <div className="lg:w-1/3">
-                <RoomBookingSection hotel={hotel} />
+                <RoomBookingSection
+                  hotel={hotel}
+                  check_in_date={check_in_date}
+                  check_out_date={check_out_date}
+                />
               </div>
             </div>
           </>
