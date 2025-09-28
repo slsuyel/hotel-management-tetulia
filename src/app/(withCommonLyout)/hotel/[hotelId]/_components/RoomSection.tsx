@@ -31,7 +31,7 @@ export function RoomSection({ hotel }: RoomSectionProps) {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {rooms.map((room) => (
           <RoomCard key={room.id} room={room} />
         ))}

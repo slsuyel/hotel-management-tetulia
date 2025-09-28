@@ -26,7 +26,7 @@ const RoomCard = ({ room }: { room: TRoom }) => {
       </div>
 
       {/* Room Details */}
-      <div className="p-4">
+      <div className=" p-2 md:p-4">
         <h2 className="text-xl font-semibold text-gray-800">
           {room.room_type} - Room #{room.room_number}
         </h2>
@@ -35,33 +35,36 @@ const RoomCard = ({ room }: { room: TRoom }) => {
           {/* You can make sq ft dynamic if available */}
         </p>
 
-        <div className="flex items-center text-gray-700 mt-4">
+        <div className="flex items-center text-gray-700 mt-2 lg:mt-4">
           <span className="text-xl mr-2">🛏️</span>
           <span className="font-semibold">
             {parseInt(room.capacity) > 2 ? "2 Queen Beds" : "1 King Bed"}
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center mt-4 text-sm text-gray-600">
-          <div className="flex items-center space-x-1 border border-gray-300 rounded-full px-2 py-1 mr-2 my-1">
-            <span className="text-green-500 text-lg">☕</span>
-            <span>Breakfast Included</span>
-          </div>
-          <div className="flex items-center space-x-1 border border-gray-300 rounded-full px-2 py-1 mr-2 my-1">
-            <span className="text-green-500 text-lg">📶</span>
-            <span>Free WiFi</span>
-          </div>
-          <div className="flex items-center space-x-1 border border-gray-300 rounded-full px-2 py-1 my-1">
-            <span className="text-green-500 text-lg">🅿️</span>
-            <span>Free Parking</span>
-          </div>
+        <div className="flex flex-wrap gap-2 mt-2 lg:mt-4 text-sm text-gray-700">
+          {[
+            { icon: "☕", label: "Breakfast Included" },
+            { icon: "📶", label: "Free WiFi" },
+            { icon: "🅿️", label: "Free Parking" },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-2 border border-gray-300 rounded-full px-3 py-1 bg-white shadow-sm"
+            >
+              <span className="text-green-500 text-sm lg:text-base">
+                {item.icon}
+              </span>
+              <span className="  text-xs lg:text-sm">{item.label}</span>
+            </div>
+          ))}
         </div>
       </div>
 
       <hr className="border-gray-200" />
 
       {/* Price and Booking Section */}
-      <div className="p-4 bg-gray-50">
+      <div className=" p-2 md:p-4 bg-gray-50">
         <div className="flex justify-between items-start">
           <div>
             <p className="text-blue-600 font-semibold">Fully Refundable</p>
@@ -88,9 +91,9 @@ const RoomCard = ({ room }: { room: TRoom }) => {
           </p>
         )}
 
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-2 md:mt-4 px-4 sm:px-0">
           <button
-            className={`w-full py-3 rounded-md font-semibold shadow-lg transition duration-300 ${
+            className={`w-full max-w-xs sm:max-w-sm py-3 rounded-md font-semibold shadow-md transition duration-300 text-sm sm:text-base ${
               room.availability
                 ? "bg-green-600 text-white hover:bg-green-700"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -103,7 +106,7 @@ const RoomCard = ({ room }: { room: TRoom }) => {
       </div>
 
       {/* Breakfast Icon */}
-      <div className="p-4 flex items-center bg-gray-100">
+      <div className=" p-2 md:p-4 flex items-center bg-gray-100">
         <span className="text-green-600 text-2xl mr-2">✨</span>
         <p className="text-sm text-gray-700">Price includes breakfast</p>
       </div>

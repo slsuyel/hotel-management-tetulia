@@ -42,16 +42,13 @@ export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
   return (
     <div className="sticky top-6">
       <Card className="shadow-lg">
-        <CardContent className="p-6">
+        <CardContent className=" p-2 md:p-3 xl:p-5">
           {/* Price Section */}
           <div className="mb-6">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-xl font-bold text-gray-900">
-               
-              </span>
-              <span className="text-gray-500">per night</span>
+              <span className="text-xl font-bold text-gray-900"></span>
+              <span className="text-gray-500">Per night</span>
             </div>
-           
           </div>
 
           {/* Booking Form */}
@@ -91,16 +88,12 @@ export function RoomBookingSection({ hotel }: RoomBookingSectionProps) {
                 <Star
                   key={i}
                   className={`h-4 w-4 ${
-                    i < 5
-                      ? "text-yellow-400 fill-current"
-                      : "text-gray-300"
+                    i < 5 ? "text-yellow-400 fill-current" : "text-gray-300"
                   }`}
                 />
               ))}
             </div>
-            <span className="text-sm text-gray-600">
-            
-            </span>
+            <span className="text-sm text-gray-600"></span>
           </div>
 
           {/* Book Button */}
