@@ -15,11 +15,17 @@ const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Room"],
     }),
-    allBookingRoomAdmin: builder.query({
-      query: ({ page = 1, limit = 10 }) => ({
-        url: `admin/get/bookings/lists?page=${page}&limit=${limit}`,
-        method: "get",
-      }),
+    allBookingRoom: builder.query({
+      query: ({ page = 1, limit = 10, isAdmin = false }) => {
+        // Decide URL conditionally
+        const url = isAdmin
+          ? `admin/get/bookings/lists?page=${page}&limit=${limit}`
+          : `hotel/get/bookings/lists?page=${page}&limit=${limit}`;
+        return {
+          url,
+          method: "get",
+        };
+      },
     }),
     
   }),
@@ -28,5 +34,5 @@ const bookingApi = baseApi.injectEndpoints({
 export const {
   useGetHotelBookingQuery,
   useBookingRoomMutation,
-  useAllBookingRoomAdminQuery
+  useAllBookingRoomQuery
 } = bookingApi;

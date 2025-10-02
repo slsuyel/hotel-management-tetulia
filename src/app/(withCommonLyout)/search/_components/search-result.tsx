@@ -23,9 +23,11 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
     <div className=" space-y-4 lg:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mt-4">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
-          {hotels?.length === 1
-            ? "১টি হোটেল পাওয়া গেছে"
-            : `${hotels?.length}টি হোটেল পাওয়া গেছে`}
+          {hotels?.length
+            ? hotels.length === 1
+              ? "১টি হোটেল পাওয়া গেছে"
+              : `${hotels.length}টি হোটেল পাওয়া গেছে`
+            : "কোনো হোটেল পাওয়া যায়নি"}
         </h2>
 
         <p className="text-sm sm:text-base text-gray-500">
