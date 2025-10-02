@@ -88,11 +88,11 @@ const Header = () => {
             <Link href={"/"}>
               <div className="flex items-center">
                 <Image
-                  src={"/n-logo-Photoroom.png"}
+                  src={"/tetulia-logo.png"}
                   alt="logo"
                   width={360}
                   height={140}
-                  className="w-auto h-14 object-contain"
+                  className="w-auto h-10 object-contain"
                 />{" "}
                 {/* Adjusted height for better header fit */}
               </div>
@@ -170,7 +170,7 @@ const Header = () => {
                   <Link href={"/"} onClick={handleNavItemClick}>
                     <div className="flex items-center">
                       <Image
-                        src={"/n-logo-Photoroom.png"}
+                        src={"/tetulia-logo.png"}
                         alt="logo"
                         width={160}
                         height={40}
