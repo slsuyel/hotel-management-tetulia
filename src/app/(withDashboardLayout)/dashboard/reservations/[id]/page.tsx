@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetHotelBookingQuery } from "@/components/Redux/RTK/hotelApi";
+import { useGetHotelBookingQuery } from "@/components/Redux/RTK/bookingApi";
 import { HotelLoader } from "@/components/ui/loadingUi";
 import { useParams } from "next/navigation";
 import { useState } from "react";

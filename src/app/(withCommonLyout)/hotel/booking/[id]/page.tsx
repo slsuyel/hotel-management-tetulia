@@ -1,6 +1,6 @@
 "use client";
+import { useBookingRoomMutation } from "@/components/Redux/RTK/bookingApi";
 import {
-  useBookingRoomMutation,
   useGetHotelDetailsQuery,
 } from "@/components/Redux/RTK/hotelApi";
 import { Button } from "@/components/ui/button";

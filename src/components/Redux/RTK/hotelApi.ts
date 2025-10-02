@@ -3,8 +3,8 @@ import { baseApi } from "../baseApi";
 const hotelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     searchHotels: builder.query({
-      query: ({ check_in_date, check_out_date, room_type, rooms_count }) =>
-        `/hotels/search?check_in_date=${check_in_date}&check_out_date=${check_out_date}&room_type=${room_type}&rooms_count=${rooms_count}`,
+      query: ({ check_in_date = "", check_out_date = "", room_type = "", rooms_count = 1 }) =>
+        `/hotels/search?check_in_date=${check_in_date}&check_out_date=${check_out_date}&room_type=${room_type}&rooms_count=${rooms_count}`,    
       providesTags: ["Hotel"],
     }),
 
@@ -12,7 +12,6 @@ const hotelApi = baseApi.injectEndpoints({
     getHotelDetails: builder.query({
       query: ({ hotel_id, check_in_date, check_out_date }) =>
         `/get/hotels/details/${hotel_id}?check_in_date=${check_in_date}&check_out_date=${check_out_date}`,
-    
     }),
 
     // Admin: Get all hotels
@@ -21,16 +20,8 @@ const hotelApi = baseApi.injectEndpoints({
       providesTags: ["Hotel"],
     }),
 
-    getHotelBooking: builder.query({
-      query: ({id,page}) => `/admin/get/bookings/lists?hotel_id=${id}?page=${page}`,
-    
-    }),
-
-
-
     getAllHotelsPublic: builder.query({
       query: () => "/hotels",
-      
     }),
 
     // Admin: Get hotel by ID
@@ -80,20 +71,11 @@ const hotelApi = baseApi.injectEndpoints({
       query: () => `/hotel/get/rooms`,
       providesTags: ["Room"],
     }),
+
+    // Auth: Get my hotel
     myHotel: builder.query({
       query: () => `/auth/hotel/me`,
     }),
-
-    bookingRoom: builder.mutation({
-      query: ({ bookingData }) => ({
-        url: `hotel/bookings`,
-        method: "POST",
-        body: bookingData ,
-      }),
-      invalidatesTags: ["Room"],
-    }),
-
-
   }),
 });
 
@@ -109,6 +91,4 @@ export const {
   useGetRoomsQuery,
   useMyHotelQuery,
   useGetAllHotelsPublicQuery,
-  useBookingRoomMutation,
-  useGetHotelBookingQuery
 } = hotelApi;
