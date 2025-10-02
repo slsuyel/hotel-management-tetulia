@@ -59,7 +59,7 @@ export default function Hotels() {
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
           {allHotels.map((hotel) => (
             <Link
-              href={`#`}
+              href={`/hotel-details/${hotel.id}`}
               key={hotel.id}
               className="group overflow-hidden rounded-sm lg:rounded-lg shadow-md hover:shadow-lg transition-all duration-300 bg-white"
             >

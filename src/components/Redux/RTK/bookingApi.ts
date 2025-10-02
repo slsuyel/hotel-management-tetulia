@@ -15,10 +15,18 @@ const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Room"],
     }),
+    allBookingRoomAdmin: builder.query({
+      query: ({ page = 1, limit = 10 }) => ({
+        url: `admin/get/bookings/lists?page=${page}&limit=${limit}`,
+        method: "get",
+      }),
+    }),
+    
   }),
 });
 
 export const {
   useGetHotelBookingQuery,
   useBookingRoomMutation,
+  useAllBookingRoomAdminQuery
 } = bookingApi;

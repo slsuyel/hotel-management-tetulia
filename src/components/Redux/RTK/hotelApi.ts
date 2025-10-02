@@ -13,6 +13,10 @@ const hotelApi = baseApi.injectEndpoints({
       query: ({ hotel_id, check_in_date, check_out_date }) =>
         `/get/hotels/details/${hotel_id}?check_in_date=${check_in_date}&check_out_date=${check_out_date}`,
     }),
+    hotelDetails: builder.query({
+      query: (hotel_id) =>
+        `/get/hotels/details/${hotel_id}`,
+    }),
 
     // Admin: Get all hotels
     getAllHotels: builder.query({
@@ -91,4 +95,5 @@ export const {
   useGetRoomsQuery,
   useMyHotelQuery,
   useGetAllHotelsPublicQuery,
+  useHotelDetailsQuery
 } = hotelApi;
