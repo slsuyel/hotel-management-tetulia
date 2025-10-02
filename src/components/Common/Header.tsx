@@ -37,13 +37,13 @@ const Header = () => {
       setActiveDropdown(slug);
     }
   };
-  /* হোম - দর্শনীয় স্থান - আবাসিক হোটেল - পরিবহন ব্যবস্থা - গ্যালারি - যোগাযোগ - অন্যান্য - লগইন */
+  /* হোম - দর্শনীয় স্থান - আবাসিক হোটেল - পরিবহন ব্যবস্থা - গ্যালারি - যোগাযোগ - অন্যান্য - লগইন */
   const navigationItems = [
     {
       title: "হোম",
       slug: "",
     },
-    { title: "দর্শনীয় স্থান ", slug: "tourist-place" },
+    { title: "দর্শনীয় স্থান ", slug: "tourist-place" },
     { title: "আবাসিক হোটেল", slug: "residential-hotel" },
 
     {
@@ -63,41 +63,57 @@ const Header = () => {
     { title: "লগইন", slug: "auth-login" },
   ];
 
+  // Close mobile menu when a navigation item is clicked
+  const handleNavItemClick = () => {
+    setIsMenuOpen(false);
+    setActiveDropdown(null);
+  };
+
   return (
     <>
-      {/* Main header */}
+      {/* Main header - Made Sticky and Enhanced Shadow */}
       <header
-        className={`${
-          isScrolled
-            ? "py-2 shadow-lg bg-white/95 backdrop-blur-sm"
-            : "py-4 bg-white"
-        }  transition-all duration-300 `}
+        className={`
+          sticky top-0 z-50 transition-all duration-300
+          ${
+            isScrolled
+              ? "py-3 shadow-xl bg-white" // Use solid white and a stronger shadow when scrolled
+              : "py-4 bg-white shadow-md" // Slightly more shadow by default for better presence
+          } 
+        `}
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link href={"/"}>
-              <div className="">
-                <Image src={"/logo.png"} alt="logo" width={160} height={160} />
+              <div className="flex items-center">
+                <Image
+                  src={"/logo.png"}
+                  alt="logo"
+                  width={160}
+                  height={40}
+                  className="w-auto h-10 object-contain"
+                />{" "}
+                {/* Adjusted height for better header fit */}
               </div>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-1">
               {navigationItems.map((item) => (
-                <div key={item.slug} className="relative group px-1">
+                <div key={item.slug} className="relative group">
                   {item.children ? (
-                    <div className=" items-center cursor-pointer group py-2 hidden">
-                      {" "}
-                      {/* flex */}
+                    // Dropdown link container
+                    <div className="flex items-center cursor-pointer group py-2">
                       <button className="flex items-center px-3 py-2 rounded-md group-hover:bg-emerald-50 transition-colors duration-200">
                         <span className="text-gray-700 group-hover:text-emerald-700 transition-colors duration-200 font-medium">
                           {item.title}
                         </span>
                         <ChevronDown className="ml-1 w-4 h-4 text-emerald-500 group-hover:text-emerald-700 transition-transform duration-300 group-hover:rotate-180" />
                       </button>
-                      {/* Dropdown for desktop */}
-                      <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-xl overflow-hidden z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">
+
+                      {/* Dropdown Menu for desktop */}
+                      <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-2xl overflow-hidden z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">
                         <div className="py-2 max-h-[60vh] overflow-y-auto">
                           {item.children.map((child) => (
                             <Link
@@ -112,6 +128,7 @@ const Header = () => {
                       </div>
                     </div>
                   ) : (
+                    // Regular link
                     <Link
                       href={`/${item.slug}`}
                       className="block px-3 py-2 text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors duration-200 font-medium"
@@ -130,9 +147,9 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? (
-                  <X className="h-5 w-5" />
+                  <X className="h-6 w-6" />
                 ) : (
-                  <Menu className="h-5 w-5" />
+                  <Menu className="h-6 w-6" />
                 )}
               </button>
             </div>
@@ -153,15 +170,17 @@ const Header = () => {
             <div className="p-4 border-b">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">পঞ্চ</span>
-                  </div>
-                  <div>
-                    <h1 className="text-lg font-bold text-gray-800">
-                      পঞ্চগড় ভ্রমণ
-                    </h1>
-                    <p className="text-xs text-emerald-600">পর্যটন গাইড</p>
-                  </div>
+                  <Link href={"/"} onClick={handleNavItemClick}>
+                    <div className="flex items-center">
+                      <Image
+                        src={"/logo.png"}
+                        alt="logo"
+                        width={160}
+                        height={40}
+                        className="w-auto h-10 object-contain"
+                      />
+                    </div>
+                  </Link>
                 </div>
                 <button
                   className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
@@ -182,7 +201,7 @@ const Header = () => {
                     <div>
                       <button
                         onClick={() => toggleDropdown(item.slug)}
-                        className="w-full flex justify-between items-center px-4 py-3 text-gray-700 hover:bg-gray-50"
+                        className="w-full flex justify-between items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-150"
                       >
                         <span className="font-medium">{item.title}</span>
                         <ChevronDown
@@ -193,13 +212,13 @@ const Header = () => {
                       </button>
 
                       {activeDropdown === item.slug && (
-                        <div className="bg-gray-50 py-2 max-h-60 overflow-y-auto">
+                        <div className="bg-gray-50 py-2 transition-all duration-300 ease-in-out max-h-60 overflow-y-auto">
                           {item.children.map((child) => (
                             <Link
                               href={`/${child.slug}`}
                               key={child.slug}
-                              className="block px-8 py-2 text-sm text-gray-600 hover:text-emerald-700"
-                              onClick={() => setIsMenuOpen(false)}
+                              className="block px-8 py-2 text-sm text-gray-600 hover:text-emerald-700 hover:bg-gray-100 transition-colors duration-150"
+                              onClick={handleNavItemClick}
                             >
                               {child.title}
                             </Link>
@@ -210,8 +229,8 @@ const Header = () => {
                   ) : (
                     <Link
                       href={`/${item.slug}`}
-                      className="block px-4 py-3 text-gray-700 hover:bg-gray-50 font-medium"
-                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-4 py-3 text-gray-700 hover:bg-gray-50 font-medium transition-colors duration-150"
+                      onClick={handleNavItemClick}
                     >
                       {item.title}
                     </Link>

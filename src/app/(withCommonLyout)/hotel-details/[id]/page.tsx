@@ -90,8 +90,13 @@ const HotelDetails = () => {
     );
   };
 
-  if (isLoading) return <HotelLoader />;
-
+  if (isLoading) {
+    return (
+      <div className=" min-h-screen flex items-center justify-center py-12">
+        <HotelLoader />;
+      </div>
+    );
+  }
   const {
     name,
     location,
