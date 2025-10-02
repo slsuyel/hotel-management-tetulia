@@ -120,12 +120,6 @@ const HotelDetails = () => {
               </div>
 
               <div className="mt-2 lg:mt-0 flex  gap-2 sm:gap-3">
-                <button
-                  onClick={handleBookNow}
-                  className="px-3 py-2 text-sm sm:text-base bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 flex-1 text-nowrap"
-                >
-                  Book Now
-                </button>
                 <a
                   href={`tel:${contact_number}`}
                   className="px-3 py-2 text-sm sm:text-base bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-semibold rounded-lg shadow-md hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300 flex-1 text-center"
@@ -177,7 +171,7 @@ const HotelDetails = () => {
         {/* Room Section */}
         <div className="mt-4 sm:mt-8">
           <h2 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-4">
-            Available Rooms ({rooms.length})
+            Rooms :
           </h2>
           <div className="space-y-2 sm:space-y-4">
             {rooms.length > 0 ? (

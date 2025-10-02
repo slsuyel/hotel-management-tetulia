@@ -25,8 +25,8 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
           {hotels?.length
             ? hotels.length === 1
-              ? "১টি হোটেল পাওয়া গেছে"
-              : `${hotels.length}টি হোটেল পাওয়া গেছে`
+              ? "১ টি হোটেল পাওয়া গেছে"
+              : `${hotels.length} টি হোটেল পাওয়া গেছে`
             : "কোনো হোটেল পাওয়া যায়নি"}
         </h2>
 
@@ -56,11 +56,10 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
                   {/* Image + Favorite Button */}
                   <div className="relative md:w-80 h-48 md:h-auto">
                     <Image
-                      height={400}
-                      width={400}
                       src={hotelImage}
                       alt={hotel.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover w-full h-full rounded-md"
                     />
                     <Button
                       variant="ghost"
@@ -147,14 +146,8 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
                           <Link
                             href={`/hotel/${hotel.id}?check_in_date=${check_in_date}&check_out_date=${check_out_date}`}
                           >
-                            <Button
-                              variant="outline"
-                              className="w-full bg-transparent"
-                            >
-                              View Details
-                            </Button>
+                            <Button className="w-full">Book Now</Button>
                           </Link>
-                          <Button className="w-full">Book Now</Button>
                         </div>
                       </div>
                     </div>
