@@ -1,11 +1,15 @@
 "use client";
 
-import { useGetAllHotelsQuery } from "@/components/Redux/RTK/hotelApi";
+import {
+  useDeleteHotelMutation,
+  useGetAllHotelsQuery,
+} from "@/components/Redux/RTK/hotelApi";
 import { Button } from "@/components/ui/button";
 import { HotelLoader } from "@/components/ui/loadingUi";
 import { Edit, Hotel, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export interface THotel {
   id: number;
@@ -26,9 +30,21 @@ export interface THotel {
 export default function HotelListPage() {
   const { data, isLoading } = useGetAllHotelsQuery(undefined);
   const router = useRouter();
-  const handleDelete = (id: any) => {
-    if (!confirm("Are you sure you want to delete this hotel?")) return;
-    // Implement delete logic here (e.g., a RTK mutation)
+  const [deleteHotel, { isLoading: deleting }] = useDeleteHotelMutation();
+
+  const handleDelete = async (id: number) => {
+    const userConfirmed = window.confirm(
+      "আপনি কি সত্যিই এই হোটেলটি মুছে ফেলতে চান?"
+    );
+    if (!userConfirmed) return;
+
+    try {
+      await deleteHotel(id).unwrap();
+      toast.success("হোটেলটি সফলভাবে মুছে ফেলা হয়েছে।");
+    } catch (error: any) {
+      toast.error("মুছে ফেলার সময় সমস্যা হয়েছে।");
+      console.error(error);
+    }
   };
 
   if (isLoading) {
@@ -147,6 +163,7 @@ export default function HotelListPage() {
                     <Edit className="h-5 w-5" />
                   </Button>
                   <Button
+                    disabled={deleting}
                     size="icon"
                     variant="ghost"
                     onClick={() => handleDelete(hotel.id)}
