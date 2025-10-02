@@ -125,12 +125,17 @@ export default function HotelListPage() {
                     size="icon"
                     variant="ghost"
                     onClick={() =>
-                      router.push(`/dashboard/reservations/${hotel.id}`)
+                      router.push(
+                        `/dashboard/reservations/${
+                          hotel.id
+                        }?hotelName=${encodeURIComponent(hotel.name)}`
+                      )
                     }
                     className="text-gray-500 hover:text-blue-500 transition-colors"
                   >
                     <Hotel className="h-5 w-5" />
                   </Button>
+
                   <Button
                     size="icon"
                     variant="ghost"
