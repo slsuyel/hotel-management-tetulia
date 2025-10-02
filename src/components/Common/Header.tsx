@@ -77,8 +77,8 @@ const Header = () => {
           sticky top-0 z-50 transition-all duration-300
           ${
             isScrolled
-              ? "py-3 shadow-xl bg-white" // Use solid white and a stronger shadow when scrolled
-              : "py-4 bg-white shadow-md" // Slightly more shadow by default for better presence
+              ? "py-4 shadow-xl bg-white" // Use solid white and a stronger shadow when scrolled
+              : "py-5 bg-white shadow-md" // Slightly more shadow by default for better presence
           } 
         `}
       >
