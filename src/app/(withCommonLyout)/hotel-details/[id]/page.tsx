@@ -21,7 +21,7 @@ const RoomCard = ({ room }: { room: any }) => (
     <div className="w-full md:w-2/3 flex flex-col justify-between text-sm sm:text-base">
       <div>
         <h3 className="text-base sm:text-lg font-bold text-indigo-600 dark:text-indigo-400">
-          Room {room.room_number}: {room.room_type}
+          কক্ষ নম্বর {room.room_number}: {room.room_type}
         </h3>
         <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-gray-100 mt-1">
           ৳{room.price_per_night}{" "}
@@ -218,7 +218,7 @@ const HotelDetails = () => {
 
               <div className="lg:col-span-1 p-2 sm:p-4 bg-indigo-50 dark:bg-gray-700 rounded-xl shadow-inner">
                 <h2 className="text-sm sm:text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 sm:mb-4">
-                  তথ্য
+                  যোগাযোগ:
                 </h2>
                 <div className="space-y-1 sm:space-y-2">
                   <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium">
