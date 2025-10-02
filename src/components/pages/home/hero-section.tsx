@@ -59,10 +59,6 @@ export function HeroSection() {
           <div className="flex flex-wrap justify-center gap-6 text-white/80">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-accent rounded-full" />
-              <span className="text-sm">ফ্রি ক্যান্সেলেশন</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-accent rounded-full" />
               <span className="text-sm">সেরা দাম গ্যারান্টি</span>
             </div>
             <div className="flex items-center gap-2">

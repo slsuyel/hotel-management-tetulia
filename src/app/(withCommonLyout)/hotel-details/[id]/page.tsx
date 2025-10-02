@@ -35,7 +35,7 @@ const RoomCard = ({ room }: { room: any }) => (
       </div>
       <div className="mt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-2">
         <span className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">
-          Max Capacity: {room.capacity}
+          ধারণ ক্ষমতা : {room.capacity}
         </span>
       </div>
     </div>
@@ -209,7 +209,7 @@ const HotelDetails = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-6">
               <div className="lg:col-span-2">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100 mb-2 sm:mb-3 border-b-2 border-indigo-400/50 pb-1">
-                  Description
+                  বর্ণনা:
                 </h2>
                 <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {description}
@@ -218,7 +218,7 @@ const HotelDetails = () => {
 
               <div className="lg:col-span-1 p-2 sm:p-4 bg-indigo-50 dark:bg-gray-700 rounded-xl shadow-inner">
                 <h2 className="text-sm sm:text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 sm:mb-4">
-                  Quick Info
+                  তথ্য
                 </h2>
                 <div className="space-y-1 sm:space-y-2">
                   <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium">
@@ -245,18 +245,18 @@ const HotelDetails = () => {
           </div>
         </div>
 
-        {/* Room Section (remains the same) */}
+        {/* Room Section */}
         <div className="mt-4 sm:mt-8">
           <h2 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-4">
-            Rooms
+            কক্ষসমূহ
           </h2>
-          <div className="space-y-2 sm:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
             {rooms.length > 0 ? (
               rooms.map((room: any) => <RoomCard key={room.id} room={room} />)
             ) : (
-              <div className="text-center py-4 sm:py-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+              <div className="text-center py-4 sm:py-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg col-span-full">
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  No room .
+                  কোনো কক্ষ পাওয়া যায়নি।
                 </p>
               </div>
             )}
