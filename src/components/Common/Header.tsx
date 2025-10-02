@@ -103,23 +103,21 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <div key={item.slug} className="relative group">
                   {item.children ? (
-                    // Dropdown link container
                     <div className="flex items-center cursor-pointer group py-2">
                       <button className="flex items-center px-3 py-2 rounded-md group-hover:bg-emerald-50 transition-colors duration-200">
-                        <span className="text-gray-700 group-hover:text-emerald-700 transition-colors duration-200 font-medium">
+                        <span className="text-gray-700 group-hover:text-emerald-700 transition-colors duration-200 font-medium text-base sm:text-lg">
                           {item.title}
                         </span>
                         <ChevronDown className="ml-1 w-4 h-4 text-emerald-500 group-hover:text-emerald-700 transition-transform duration-300 group-hover:rotate-180" />
                       </button>
-
-                      {/* Dropdown Menu for desktop */}
+                      {/* Dropdown Menu */}
                       <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-2xl overflow-hidden z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">
                         <div className="py-2 max-h-[60vh] overflow-y-auto">
                           {item.children.map((child) => (
                             <Link
                               href={`/${child.slug}`}
                               key={child.slug}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors duration-150"
+                              className="block px-4 py-2 text-base text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors duration-150"
                             >
                               {child.title}
                             </Link>
@@ -128,10 +126,9 @@ const Header = () => {
                       </div>
                     </div>
                   ) : (
-                    // Regular link
                     <Link
                       href={`/${item.slug}`}
-                      className="block px-3 py-2 text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors duration-200 font-medium"
+                      className="block px-3 py-2 text-base sm:text-lg text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors duration-200 font-medium"
                     >
                       {item.title}
                     </Link>
@@ -201,9 +198,9 @@ const Header = () => {
                     <div>
                       <button
                         onClick={() => toggleDropdown(item.slug)}
-                        className="w-full flex justify-between items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+                        className="w-full flex justify-between items-center px-4 py-3 text-base text-gray-700 hover:bg-gray-50 transition-colors duration-150 font-medium"
                       >
-                        <span className="font-medium">{item.title}</span>
+                        <span>{item.title}</span>
                         <ChevronDown
                           className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
                             activeDropdown === item.slug ? "rotate-180" : ""
@@ -217,7 +214,7 @@ const Header = () => {
                             <Link
                               href={`/${child.slug}`}
                               key={child.slug}
-                              className="block px-8 py-2 text-sm text-gray-600 hover:text-emerald-700 hover:bg-gray-100 transition-colors duration-150"
+                              className="block px-8 py-2 text-base text-gray-600 hover:text-emerald-700 hover:bg-gray-100 transition-colors duration-150 font-medium"
                               onClick={handleNavItemClick}
                             >
                               {child.title}
@@ -229,7 +226,7 @@ const Header = () => {
                   ) : (
                     <Link
                       href={`/${item.slug}`}
-                      className="block px-4 py-3 text-gray-700 hover:bg-gray-50 font-medium transition-colors duration-150"
+                      className="block px-4 py-3 text-base text-gray-700 hover:bg-gray-50 font-medium transition-colors duration-150"
                       onClick={handleNavItemClick}
                     >
                       {item.title}
