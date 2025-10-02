@@ -23,10 +23,13 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
     <div className=" space-y-4 lg:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mt-4">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
-          Found {hotels?.length} hotel{hotels.length !== 1 ? "s" : ""}
+          {hotels?.length === 1
+            ? "১টি হোটেল পাওয়া গেছে"
+            : `${hotels?.length}টি হোটেল পাওয়া গেছে`}
         </h2>
+
         <p className="text-sm sm:text-base text-gray-500">
-          All prices are in USD
+          সমস্ত দাম BDT (বাংলাদেশি টাকা) তে দেখানো হয়েছে
         </p>
       </div>
 
@@ -127,10 +130,10 @@ export function HotelResults({ hotels, check_in_date, check_out_date }: any) {
                         {/* Pricing */}
                         <div>
                           <div className="text-sm text-muted-foreground line-through">
-                            ${Number(price) + 50}
+                            {Number(price) + 50}
                           </div>
                           <div className="text-2xl font-bold text-primary">
-                            ${price}
+                            {price}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             per night
