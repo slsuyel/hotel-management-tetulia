@@ -37,7 +37,7 @@ export default function Hotels() {
     <section className="py-8 sm:py-16 bg-gray-50">
       <div className="container mx-auto px-3 sm:px-4">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-6 sm:mb-10">
-          আবাসিক হোটেলসমূহ
+        আবাসিক হোটেল এবং কমিউনিটি হোম স্টে
         </h2>
 
         {/* Categories */}
